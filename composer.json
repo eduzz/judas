@@ -4,12 +4,12 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Judas\\": "Judas/"
+            "Eduzz\\Judas\\": "Judas/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Judas\\Tests\\": "tests"
+            "Eduzz\\Judas\\Tests\\": "tests/"
         }
     },
     "require-dev": {

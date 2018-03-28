@@ -2,12 +2,10 @@
 
 namespace Judas;
 
-
 use Adbar\Dot;
 
 class Judas
 {
-
     private $context;
     private $hosts;
     private $app;
@@ -23,17 +21,19 @@ class Judas
     public function __construct($connection = null)
     {
         $this->hosts = ($connection == null) ? ['host' => 'localhost', 'port' => '9200', 'scheme' => 'http', 'user' => '', 'pass' => ''] : $connection;
-        $this->configPath = __DIR__.'/judas-config.json';
+
+        $this->configPath = __DIR__ . '/judas-config.json';
         $this->config = $this->getConfig();
         $this->index  = $this->config->document;
         $this->type = 'default';
         $this->data = [];
     }
 
-    public function debug($var='')
+    public function debug($var = '')
     {
-        if( defined('DEBUG_JUDAS') && DEBUG_JUDAS == 1 )
+        if (defined('DEBUG_JUDAS') && DEBUG_JUDAS == 1) {
             print_r('|'.$var.'--');
+        }
     }
 
 
@@ -48,12 +48,12 @@ class Judas
         $arrContext = explode('.', $context_str);
         $foundContext = false;
 
-        if (sizeof($arrContext) != 3)
+        if (sizeof($arrContext) != 3) {
             return false;
+        }
 
         foreach ($this->config->contexts as $context) {
-            if ($context->name == $context_str)
-            {
+            if ($context->name == $context_str) {
                 $foundContext = true;
                 $this->actual_context = $context;
             }
@@ -61,8 +61,7 @@ class Judas
 
         if (!$foundContext) {
             foreach ($this->config->contexts as $context) {
-                if ($context->name == $this->app . '.' . $this->category . '*')
-                {
+                if ($context->name == $this->app . '.' . $this->category . '*') {
                     $foundContext = true;
                     $this->actual_context = $context;
                 }
@@ -79,7 +78,6 @@ class Judas
         $this->context = $context;
 
         return true;
-
     }
 
     public function parseSchema($data)
@@ -87,17 +85,17 @@ class Judas
 
         $dot = new Dot();
 
-        $dot->set('event.app',$this->app);
-        $dot->set('event.category',$this->category);
-        $dot->set('event.subcategory',$this->subcategory);
+        $dot->set('event.app', $this->app);
+        $dot->set('event.category', $this->category);
+        $dot->set('event.subcategory', $this->subcategory);
         $dot->set('event.date', date('Y-m-d\TH:i:s\Z'));
 
         foreach ($this->actual_context->schema as $key => $val) {
             if (isset($data[$val])) {
                 $dot->set($val, $data[$val]);
-            }
-            else
+            } else {
                 $this->debug($val . ' not found in schema');
+            }
         }
 
         return $dot->all();
@@ -106,8 +104,7 @@ class Judas
 
     public function log($context = '', $data = [])
     {
-        if(!$this->contextValidate($context, []))
-        {
+        if (!$this->contextValidate($context, [])) {
             $this->debug('--Unknown Context--');
             return;
         }
@@ -115,13 +112,11 @@ class Judas
         $this->data = $this->parseSchema($data);
 
         $this->save();
-
     }
 
     public function save()
     {
         $elastic = new JudasElastic($this->config->host);
-        $elastic->put($this->type,$this->index,$this->data);
+        $elastic->put($this->type, $this->index, $this->data);
     }
-
 }
