@@ -32,7 +32,6 @@ class JudasElastic
             curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         }
 
-
         $response=curl_exec($ch);
 
         return $response;

@@ -36,7 +36,6 @@ class Judas
         }
     }
 
-
     public function getConfig()
     {
         $file = file_get_contents($this->configPath);
@@ -100,7 +99,6 @@ class Judas
 
         return $dot->all();
     }
-
 
     public function log($context = '', $data = [])
     {
