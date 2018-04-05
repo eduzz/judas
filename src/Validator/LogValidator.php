@@ -11,6 +11,8 @@ class LogValidator implements JsonValidatorInterface
 
     private $schema;
 
+    private $lastValidationErrorMessage;
+
     public function __construct($toValidate, $schema)
     {
         $this->setArrayToValidate($toValidate);
@@ -28,6 +30,7 @@ class LogValidator implements JsonValidatorInterface
 
             if (strpos($key, '*') !== false) {
                 if (!array_key_exists($keyWithoutSymbols, $this->toValidate)) {
+                    $this->setValidationErrorMessage("The attribute '{$keyWithoutSymbols}' is required in the message.");
                     return false;
                 }
             }
@@ -39,18 +42,24 @@ class LogValidator implements JsonValidatorInterface
 
                     if ($type == 'choose') {
                         if (!in_array($this->toValidate[$keyWithoutSymbols], $value)) {
+                            $this->setValidationErrorMessage("Value {$this->toValidate[$keyWithoutSymbols]} is invalid, expecting one of these: " . $this->convertArrayToString($value));
+
                             return false;
                         }
                     }
 
                     if ($type == 'regex') {
                         if (!preg_match($value['pattern'], $this->toValidate[$keyWithoutSymbols])) {
+                            $this->setValidationErrorMessage("Value " . $this->toValidate[$keyWithoutSymbols] . " is invalid, expect someting like: " . $value['example']);
+
                             return false;
                         }
                     }
 
                     if ($type == 'type') {
                         if (gettype($this->toValidate[$keyWithoutSymbols]) != $value['expected']) {
+                            $this->setValidationErrorMessage("Type of " . $this->toValidate[$keyWithoutSymbols] . " is invalid, expecting: " . $value['expected']);
+
                             return false;
                         }
                     }
@@ -59,6 +68,33 @@ class LogValidator implements JsonValidatorInterface
         }
 
         return true;
+    }
+
+    public function convertArrayToString($array)
+    {
+        $arrayString = "[";
+
+        foreach ($array as $key => $value) {
+            $arrayString .= "'" . $value . "'";
+
+            if($value != end($array)) {
+                $arrayString .= ",";
+            }
+        }
+
+        $arrayString .= "]";
+
+        return $arrayString;
+    }
+
+    public function getLastValidationErrorMessage()
+    {
+        return $this->lastValidationErrorMessage;
+    }
+
+    private function setValidationErrorMessage($message)
+    {
+        $this->lastValidationErrorMessage = $message;
     }
 
     public function setArrayToValidate($toValidate)

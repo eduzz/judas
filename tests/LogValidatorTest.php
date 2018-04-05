@@ -6,7 +6,7 @@ use Eduzz\Judas\Validator\LogValidator;
 use Eduzz\Judas\Validator\Schemas;
 use PHPUnit\Framework\TestCase;
 
-class LogsValidatorTest extends TestCase
+class LogValidatorTest extends TestCase
 {
     public function testConstructorAndInstance()
     {
