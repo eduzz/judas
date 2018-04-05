@@ -7,16 +7,16 @@ class Schemas
     const INFO = [
         '*agent' => ['choose', 'procedure', 'system', 'user', 'support'],
         '*event.app' => ['choose', 'checkoutsun', 'myeduzz', 'checkoutleg', 'myeduzzleg', 'nutror', 'next'],
-        '*event.module' => 'string',
-        '*event.action' => 'string',
-        '*data.id' => 'int',
-        '*date' => '??',
-        'user.id' => 'int',
-        'user.name' => 'string',
+        '*event.module' => ['type', 'string'],
+        '*event.action' => ['type', 'string'],
+        '*data.id' => ['type', 'integer'],
+        '*date' => '*',
+        'user.id' => ['type', 'integer'],
+        'user.name' => ['type', 'string'],
         'user.ip' => [
             'regex',
             'pattern' => '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/'
         ],
-        'additional_data' => null // Any other data goes here
+        'additional_data' => '*' // Any other data goes here
     ];
 }

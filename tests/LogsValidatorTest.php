@@ -36,7 +36,7 @@ class LogsValidatorTest extends TestCase
                 'event.action' => 'created',
                 'data.id' => 2842,
                 'date' => null,
-                'user.id' => 123123,
+                'user.id' => 12312,
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
             ]
