@@ -19,7 +19,9 @@ class LogValidator implements JsonValidatorInterface
 
     public function isValid()
     {
-        $decodedScheme = $this->schema;
+        if(count($this->schema) <= 0) {
+            return true;
+        }
 
         foreach ($this->schema as $key => $value) {
             $keyWithoutSymbols = str_replace('*', '', $key);
