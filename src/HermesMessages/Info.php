@@ -6,8 +6,8 @@ use Eduzz\Hermes\Message\AbstractMessage;
 
 class Info extends AbstractMessage
 {
-    public function __construct()
+    public function __construct($context, $payload)
     {
-        parent::__construct('sun.user.created', ['id' => $id, 'message' => $message]);
+        parent::__construct($context, $payload);
     }
 }

@@ -4,11 +4,11 @@ namespace Eduzz\Judas\Validator;
 
 interface JsonValidatorInterface
 {
-    public function __construct($arrayToValidate, $scheme);
+    public function __construct($toValidate);
 
-    public function validate();
+    public function isValid();
 
-    public function setArray($array);
+    public function setArrayToValidate($toValidate);
 
-    public function setScheme($scheme);
+    public function setSchema($schema);
 }
