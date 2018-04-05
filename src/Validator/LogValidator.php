@@ -11,10 +11,10 @@ class LogValidator implements JsonValidatorInterface
 
     private $schema;
 
-    public function __construct($toValidate)
+    public function __construct($toValidate, $schema)
     {
         $this->setArrayToValidate($toValidate);
-        $this->setSchema(Schemas::INFO);
+        $this->setSchema($schema);
     }
 
     public function isValid()
