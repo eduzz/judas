@@ -40,6 +40,12 @@ class LogValidator implements JsonValidatorInterface
                             return false;
                         }
                     }
+
+                    if($type == 'regex') {
+                        if(!preg_match($value['pattern'], $this->toValidate[$keyWithoutSymbols])) {
+                            return false;
+                        }
+                    }
                 }
             }
         }
