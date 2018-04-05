@@ -48,7 +48,7 @@ class LogValidator implements JsonValidatorInterface
                     }
 
                     if($type == 'type') {
-                        if(gettype($this->toValidate[$keyWithoutSymbols]) != $value[1]) {
+                        if(gettype($this->toValidate[$keyWithoutSymbols]) != $value['expected']) {
                             return false;
                         }
                     }

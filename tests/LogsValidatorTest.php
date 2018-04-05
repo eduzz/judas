@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class LogsValidatorTest extends TestCase
 {
-    public function testLogsValidatorConstructorAndInstance()
+    public function testConstructorAndInstance()
     {
         $logValidator = new LogValidator(
             [
@@ -26,7 +26,7 @@ class LogsValidatorTest extends TestCase
         $this->assertInstanceOf(LogValidator::class, $logValidator);
     }
 
-    public function testLogValidatorValidateWichShouldBeValid()
+    public function testValidateWichShouldBeValid()
     {
         $logValidator = new LogValidator(
             [
@@ -44,4 +44,63 @@ class LogsValidatorTest extends TestCase
 
         $this->assertTrue($logValidator->isValid());
     }
+
+    public function testLogValidatorValidateWichShouldBeInvalidBecauseDontHaveSomeIndex()
+    {
+        $logValidator = new LogValidator(
+            [
+                'AGENTSHOULDBEHERE' => 'user',
+                'event.app' => 'checkoutsun',
+                'event.module' => 'invoice',
+                'event.action' => 'created',
+                'data.id' => 2842,
+                'date' => null,
+                'user.id' => 12312,
+                'user.name' => 'johndoe',
+                'user.ip' => '127.0.0.1'
+            ]
+        );
+
+        $this->assertFalse($logValidator->isValid());
+    }
+
+    public function testLogValidatoreInvalidBecauseHaveInvalidChooseValue()
+    {
+        $logValidator = new LogValidator(
+            [
+                'agent' => 'user',
+                'event.app' => 'HERESHOULDHAVEVALIDOPTION',
+                'event.module' => 'invoice',
+                'event.action' => 'created',
+                'data.id' => 2842,
+                'date' => null,
+                'user.id' => 12312,
+                'user.name' => 'johndoe',
+                'user.ip' => '127.0.0.1'
+            ]
+        );
+
+        $this->assertFalse($logValidator->isValid());
+    }
+
+    public function testValidateWichShouldBeInvalidBecauseHaveInvalidType()
+    {
+        $logValidator = new LogValidator(
+            [
+                'agent' => 'user',
+                'event.app' => 'checkoutsun',
+                'event.module' => 'invoice',
+                'event.action' => 'created',
+                'data.id' => 'INVALIDTYPE',
+                'date' => null,
+                'user.id' => 12312,
+                'user.name' => 'johndoe',
+                'user.ip' => '127.0.0.1'
+            ]
+        );
+
+        $this->assertFalse($logValidator->isValid());
+    }
+
+
 }
