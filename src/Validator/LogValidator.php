@@ -29,6 +29,19 @@ class LogValidator implements JsonValidatorInterface
                     return false;
                 }
             }
+
+            if(array_key_exists($keyWithoutSymbols, $this->toValidate)) {
+                if(is_array($value)) {
+                    $type = $value[0];
+                    unset($value[0]);
+
+                    if($type == 'choose') {
+                        if(!in_array($this->toValidate[$keyWithoutSymbols], $value)) {
+                            return false;
+                        }
+                    }
+                }
+            }
         }
 
         return true;
