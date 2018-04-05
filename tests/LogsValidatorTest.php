@@ -101,6 +101,4 @@ class LogsValidatorTest extends TestCase
 
         $this->assertFalse($logValidator->isValid());
     }
-
-
 }

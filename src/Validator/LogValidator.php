@@ -19,38 +19,38 @@ class LogValidator implements JsonValidatorInterface
 
     public function isValid()
     {
-        if(count($this->schema) <= 0) {
+        if (count($this->schema) <= 0) {
             return true;
         }
 
         foreach ($this->schema as $key => $value) {
             $keyWithoutSymbols = str_replace('*', '', $key);
 
-            if(strpos($key, '*') !== false) {
-                if(!array_key_exists($keyWithoutSymbols, $this->toValidate)) {
+            if (strpos($key, '*') !== false) {
+                if (!array_key_exists($keyWithoutSymbols, $this->toValidate)) {
                     return false;
                 }
             }
 
-            if(array_key_exists($keyWithoutSymbols, $this->toValidate)) {
-                if(is_array($value)) {
+            if (array_key_exists($keyWithoutSymbols, $this->toValidate)) {
+                if (is_array($value)) {
                     $type = $value[0];
                     unset($value[0]);
 
-                    if($type == 'choose') {
-                        if(!in_array($this->toValidate[$keyWithoutSymbols], $value)) {
+                    if ($type == 'choose') {
+                        if (!in_array($this->toValidate[$keyWithoutSymbols], $value)) {
                             return false;
                         }
                     }
 
-                    if($type == 'regex') {
-                        if(!preg_match($value['pattern'], $this->toValidate[$keyWithoutSymbols])) {
+                    if ($type == 'regex') {
+                        if (!preg_match($value['pattern'], $this->toValidate[$keyWithoutSymbols])) {
                             return false;
                         }
                     }
 
-                    if($type == 'type') {
-                        if(gettype($this->toValidate[$keyWithoutSymbols]) != $value['expected']) {
+                    if ($type == 'type') {
+                        if (gettype($this->toValidate[$keyWithoutSymbols]) != $value['expected']) {
                             return false;
                         }
                     }
