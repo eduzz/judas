@@ -58,7 +58,7 @@ class LogValidator implements JsonValidatorInterface
 
                     if ($type == 'type') {
                         if (gettype($this->toValidate[$keyWithoutSymbols]) != $value['expected']) {
-                            $this->setValidationErrorMessage("Type of " . $this->toValidate[$keyWithoutSymbols] . " is invalid, expecting: " . $value['expected']);
+                            $this->setValidationErrorMessage("Type of " . $this->toValidate[$keyWithoutSymbols] . " is invalid, expecting: " . $value['expected'] . " on {$keyWithoutSymbols}");
 
                             return false;
                         }

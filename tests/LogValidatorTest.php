@@ -36,8 +36,8 @@ class LogValidatorTest extends TestCase
                 'event.app' => 'checkoutsun',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
-                'data.id' => 2842,
-                'date' => null,
+                'event.date' => '2018-04-06T14:10:57Z',
+                'event.data.id' => 2842,
                 'user.id' => 12312,
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
@@ -48,7 +48,7 @@ class LogValidatorTest extends TestCase
         $this->assertTrue($logValidator->isValid());
     }
 
-    public function testLogValidatorValidateWichShouldBeInvalidBecauseDontHaveSomeIndex()
+    public function testValidateWichShouldBeInvalidBecauseDontHaveSomeIndex()
     {
         $logValidator = new LogValidator(
             [
@@ -56,8 +56,8 @@ class LogValidatorTest extends TestCase
                 'event.app' => 'checkoutsun',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
-                'data.id' => 2842,
-                'date' => null,
+                'event.date' => '2018-04-06T14:10:57Z',
+                'event.data.id' => 2842,
                 'user.id' => 12312,
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
@@ -68,16 +68,16 @@ class LogValidatorTest extends TestCase
         $this->assertFalse($logValidator->isValid());
     }
 
-    public function testLogValidatoreInvalidBecauseHaveInvalidChooseValue()
+    public function testeInvalidBecauseHaveInvalidChooseValue()
     {
         $logValidator = new LogValidator(
             [
                 'agent' => 'user',
-                'event.app' => 'HERESHOULDHAVEVALIDOPTION',
+                'event.app' => 'HERESHOULDHAVEAVALIDOPTION',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
-                'data.id' => 2842,
-                'date' => null,
+                'event.date' => '2018-04-06T14:10:57Z',
+                'event.data.id' => 2842,
                 'user.id' => 12312,
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
@@ -96,8 +96,28 @@ class LogValidatorTest extends TestCase
                 'event.app' => 'checkoutsun',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
-                'data.id' => 'INVALIDTYPE',
-                'date' => null,
+                'event.date' => '2018-04-06T14:10:57Z',
+                'event.data.id' => 'INVALIDTYPE',
+                'user.id' => 12312,
+                'user.name' => 'johndoe',
+                'user.ip' => '127.0.0.1'
+            ],
+            Schemas::INFO
+        );
+
+        $this->assertFalse($logValidator->isValid());
+    }
+
+    public function testValidateWichShouldBeInvalidBecauseDontPassInRegex()
+    {
+        $logValidator = new LogValidator(
+            [
+                'agent' => 'user',
+                'event.app' => 'checkoutsun',
+                'event.module' => 'invoice',
+                'event.action' => 'created',
+                'event.date' => 'THISDONTWILLPASS',
+                'event.data.id' => 'INVALIDTYPE',
                 'user.id' => 12312,
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
