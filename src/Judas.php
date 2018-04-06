@@ -14,7 +14,7 @@ class Judas
     public function log($context, $messageData)
     {
         if(!($this->logger instanceof LoggerInterface)) {
-            $this->setDefaultLogger();
+            $this->setLogger($this->getDefaultLogger());
         }
 
         $this->logger->info($context, $messageData);
@@ -25,9 +25,9 @@ class Judas
         $this->logger = $logger;
     }
 
-    private function setDefaultLogger()
+    private function getDefaultLogger()
     {
-        $this->logger = new JudasLogger();
+        return new JudasLogger();
     }
 
     public function setQueueConfig($config = null)
