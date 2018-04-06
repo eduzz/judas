@@ -13,7 +13,7 @@ class LogValidatorTest extends TestCase
         $logValidator = new LogValidator(
             [
                 'agent' => 'user',
-                'event.app' => 'checkoutsun',
+                'event.app' => 'cktsun',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
                 'data.id' => 2842,
@@ -33,7 +33,7 @@ class LogValidatorTest extends TestCase
         $logValidator = new LogValidator(
             [
                 'agent' => 'user',
-                'event.app' => 'checkoutsun',
+                'event.app' => 'cktsun',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
                 'event.date' => '2018-04-06T14:10:57Z',
@@ -53,7 +53,7 @@ class LogValidatorTest extends TestCase
         $logValidator = new LogValidator(
             [
                 'AGENTSHOULDBEHERE' => 'user',
-                'event.app' => 'checkoutsun',
+                'event.app' => 'cktsun',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
                 'event.date' => '2018-04-06T14:10:57Z',
@@ -93,7 +93,7 @@ class LogValidatorTest extends TestCase
         $logValidator = new LogValidator(
             [
                 'agent' => 'user',
-                'event.app' => 'checkoutsun',
+                'event.app' => 'cktsun',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
                 'event.date' => '2018-04-06T14:10:57Z',
@@ -113,7 +113,7 @@ class LogValidatorTest extends TestCase
         $logValidator = new LogValidator(
             [
                 'agent' => 'user',
-                'event.app' => 'checkoutsun',
+                'event.app' => 'cktsun',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
                 'event.date' => 'THISDONTWILLPASS',
