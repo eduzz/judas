@@ -5,6 +5,13 @@ use Eduzz\Judas\Judas;
 
 $judas = new Judas();
 
+$judas->setQueueConfig([
+    'host' => 'localhost',
+    'port' => 5672,
+    'username' => 'guest',
+    'password' => 'guest'
+]);
+
 $judas->log(
     'cktsun.invoice.created',
     [

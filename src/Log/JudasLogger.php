@@ -18,6 +18,12 @@ class JudasLogger implements LoggerInterface
 
     private $hermes;
 
+    private $queueConfig;
+
+    public function __construct() {
+
+    }
+
     public function info($context, $message)
     {
         $this->setContext($context);
@@ -57,8 +63,21 @@ class JudasLogger implements LoggerInterface
     private function setHermesInstance()
     {
         if(!$this->hermes instanceof Hermes) {
-            $this->hermes = new Hermes();
+            if($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
+                $this->hermes = new Hermes($this->queueConfig);
+            } else {
+                $this->hermes = new Hermes();
+            }
         }
+    }
+
+    public function setQueueConfig($config = null)
+    {
+        if(!$config || empty($config) || count($config) <= 0) {
+            throw new \Error("Config cannot be empty");
+        }
+
+        $this->queueConfig = $config;
     }
 
     private function setDefaultElasticParamsOnArray(&$array, $context) {

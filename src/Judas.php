@@ -11,6 +11,8 @@ class Judas
 
     private $logger;
 
+    private $queueConfig;
+
     public function log($context, $messageData)
     {
         if(!($this->logger instanceof LoggerInterface)) {
@@ -27,15 +29,21 @@ class Judas
 
     private function getDefaultLogger()
     {
-        return new JudasLogger();
+        $judasLogger = new JudasLogger();
+
+        if($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
+            $judasLogger->setQueueConfig($this->queueConfig);
+        }
+
+        return $judasLogger;
     }
 
     public function setQueueConfig($config = null)
     {
         if(!$config || empty($config) || count($config) <= 0) {
-            $this->hermes = new Hermes();
+            throw new \Error("Config cannot be empty");
         }
 
-        $this->hermes = new Hermes($config);
+        $this->queueConfig = $config;
     }
 }
