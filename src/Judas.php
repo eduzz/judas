@@ -4,6 +4,8 @@ namespace Eduzz\Judas;
 
 use Eduzz\Judas\Log\LoggerInterface;
 use Eduzz\Judas\Log\JudasLogger;
+use Eduzz\Judas\LogKeeper\LogKeeperInterface;
+use Eduzz\Judas\LogKeeper\JudasKeeper;
 
 class Judas
 {
@@ -13,7 +15,9 @@ class Judas
 
     private $queueConfig;
 
-    private $elasticConfig;
+    private $logKeeper;
+
+    private $keeperConfig;
 
     public function log($context, $messageData)
     {
@@ -49,24 +53,33 @@ class Judas
         $this->queueConfig = $config;
     }
 
-    public function store($context, $jsonData) {
-        if(empty($jsonData) || !$jsonData) {
-            throw new \Error("Data for elastic cannot be empty");
+    public function store($json) {
+        if(!($this->logger instanceof LogKeeperInterface)) {
+            $this->setLogKeeper($this->getDefaultLogKeeper());
         }
 
-        if(empty(!$context) || !$context) {
-            throw new \Error("Context cannot be empty");
-        }
-
-        $keeper = new LogKeeper();
-        $keeper->store($context, $jsonData);
+        $this->logKeeper->store($json);
     }
 
-    public function setElasticConfig($config = null) {
-        if(!$config || empty($config) || count($config) <= 0) {
+    public function setLogKeeper(LogKeeperInterface $logKeeper) {
+        $this->logKeeper = $logKeeper;
+    }
+
+    private function getDefaultLogKeeper() {
+        $judasKeeper = new JudasKeeper();
+
+        if(!empty($this->keeperConfig)) {
+            $judasKeeper->setElasticConfig($this->keeperConfig);
+        }
+
+        return $judasKeeper;
+    }
+
+    public function setKeeperConfig($config = null) {
+        if(!is_array($config) || count($config) <= 0) {
             throw new \Error("Elastic config cannot be empty");
         }
 
-        $this->elasticConfig = $config;
+        $this->keeperConfig = $config;
     }
 }

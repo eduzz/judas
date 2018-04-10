@@ -5,7 +5,7 @@ use Eduzz\Judas\Judas;
 
 $judas = new Judas();
 
-$judas->setElasticConfig([
+$judas->setKeeperConfig([
     'host' => 'localhost',
     'port' => 5601,
     'user' => 'elastic',
@@ -17,4 +17,4 @@ $data = [
     'name' => 'teste'
 ];
 
-$judas->store('cktsun.invoice.created', json_encode($data));
+$judas->store(json_encode($data));
