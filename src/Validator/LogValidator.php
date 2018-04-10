@@ -77,7 +77,7 @@ class LogValidator implements JsonValidatorInterface
         foreach ($array as $key => $value) {
             $arrayString .= "'" . $value . "'";
 
-            if($value != end($array)) {
+            if ($value != end($array)) {
                 $arrayString .= ",";
             }
         }

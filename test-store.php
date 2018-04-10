@@ -7,14 +7,15 @@ $judas = new Judas();
 
 $judas->setKeeperConfig([
     'host' => 'localhost',
-    'port' => 5601,
+    'port' => 9200,
     'user' => 'elastic',
     'pass' => ''
 ]);
 
 $data = [
     'id' => 12,
-    'name' => 'teste'
+    'name' => 'xpto',
+    'index' => 'history'
 ];
 
 $judas->store(json_encode($data));

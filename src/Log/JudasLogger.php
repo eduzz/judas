@@ -20,14 +20,10 @@ class JudasLogger implements LoggerInterface
 
     private $queueConfig;
 
-    public function __construct() {
-
-    }
-
     public function info($context, $message)
     {
         $this->setContext($context);
-        $this->setMessage($message, Schemas::INFO, 'info');
+        $this->setMessage($message, Schemas::INFO, 'history');
 
         $this->setHermesInstance();
 
@@ -36,13 +32,13 @@ class JudasLogger implements LoggerInterface
         );
     }
 
-    public function setMessage($messageData, $schema, $level)
+    public function setMessage($messageData, $schema, $index)
     {
-        $this->setDefaultElasticParamsOnArray($messageData, $this->context, $level);
+        $this->setDefaultParamsOnArray($messageData, $this->context, $index);
 
         $logValidator = new LogValidator($messageData, $schema);
 
-        if(!$logValidator->isValid()) {
+        if (!$logValidator->isValid()) {
             throw new \Error($logValidator->getLastValidationErrorMessage());
         }
 
@@ -62,8 +58,8 @@ class JudasLogger implements LoggerInterface
 
     private function setHermesInstance()
     {
-        if(!$this->hermes instanceof Hermes) {
-            if($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
+        if (!$this->hermes instanceof Hermes) {
+            if ($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
                 $this->hermes = new Hermes($this->queueConfig);
             } else {
                 $this->hermes = new Hermes();
@@ -73,16 +69,17 @@ class JudasLogger implements LoggerInterface
 
     public function setQueueConfig($config = null)
     {
-        if(!$config || empty($config) || count($config) <= 0) {
+        if (!$config || empty($config) || count($config) <= 0) {
             throw new \Error("Config cannot be empty");
         }
 
         $this->queueConfig = $config;
     }
 
-    private function setDefaultElasticParamsOnArray(&$array, $context, $level) {
+    private function setDefaultParamsOnArray(&$array, $context, $index)
+    {
         $array['event.date'] = str_replace('+00:00', 'Z', gmdate('c'));
-        $array['level'] = $level;
+        $array['index'] = $index;
         $explodedContext = explode('.', $this->context);
 
         $array['event.app'] = $explodedContext[0];
@@ -92,7 +89,7 @@ class JudasLogger implements LoggerInterface
 
     public function setContext($context)
     {
-        if(empty($context)) {
+        if (empty($context)) {
             throw new \Error("Context cannot be empty");
         }
 
