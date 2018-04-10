@@ -27,7 +27,7 @@ class JudasLogger implements LoggerInterface
     public function info($context, $message)
     {
         $this->setContext($context);
-        $this->setMessage($message);
+        $this->setMessage($message, Schemas::INFO, 'info');
 
         $this->setHermesInstance();
 
@@ -36,11 +36,11 @@ class JudasLogger implements LoggerInterface
         );
     }
 
-    public function setMessage($messageData)
+    public function setMessage($messageData, $schema, $level)
     {
-        $this->setDefaultElasticParamsOnArray($messageData, $this->context);
+        $this->setDefaultElasticParamsOnArray($messageData, $this->context, $level);
 
-        $logValidator = new LogValidator($messageData, Schemas::INFO);
+        $logValidator = new LogValidator($messageData, $schema);
 
         if(!$logValidator->isValid()) {
             throw new \Error($logValidator->getLastValidationErrorMessage());
@@ -80,8 +80,9 @@ class JudasLogger implements LoggerInterface
         $this->queueConfig = $config;
     }
 
-    private function setDefaultElasticParamsOnArray(&$array, $context) {
+    private function setDefaultElasticParamsOnArray(&$array, $context, $level) {
         $array['event.date'] = str_replace('+00:00', 'Z', gmdate('c'));
+        $array['level'] = $level;
         $explodedContext = explode('.', $this->context);
 
         $array['event.app'] = $explodedContext[0];

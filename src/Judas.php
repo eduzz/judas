@@ -13,6 +13,8 @@ class Judas
 
     private $queueConfig;
 
+    private $elasticConfig;
+
     public function log($context, $messageData)
     {
         if(!($this->logger instanceof LoggerInterface)) {
@@ -41,9 +43,30 @@ class Judas
     public function setQueueConfig($config = null)
     {
         if(!$config || empty($config) || count($config) <= 0) {
-            throw new \Error("Config cannot be empty");
+            throw new \Error("Queue config cannot be empty");
         }
 
         $this->queueConfig = $config;
+    }
+
+    public function store($context, $jsonData) {
+        if(empty($jsonData) || !$jsonData) {
+            throw new \Error("Data for elastic cannot be empty");
+        }
+
+        if(empty(!$context) || !$context) {
+            throw new \Error("Context cannot be empty");
+        }
+
+        $keeper = new LogKeeper();
+        $keeper->store($context, $jsonData);
+    }
+
+    public function setElasticConfig($config = null) {
+        if(!$config || empty($config) || count($config) <= 0) {
+            throw new \Error("Elastic config cannot be empty");
+        }
+
+        $this->elasticConfig = $config;
     }
 }
