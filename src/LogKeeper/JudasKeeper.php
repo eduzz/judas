@@ -43,7 +43,7 @@ class JudasKeeper implements LogKeeperInterface
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-        var_dump(curl_exec($ch));
+        return curl_exec($ch);
     }
 
     private function getAttributeValueFromJson($attribute, $json)
@@ -62,8 +62,6 @@ class JudasKeeper implements LogKeeperInterface
         $url = 'http://' . $this->config['host'] . ':' .
             $this->config['port'] . '/' .
             $index . '/default';
-
-        echo $url;
 
         return $url;
     }
