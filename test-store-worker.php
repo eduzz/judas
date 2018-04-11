@@ -11,5 +11,3 @@ $hermes = new Hermes();
 $hermes->addListenerTo('cktsun.invoice.created', function($msg) use ($judas) {
     $judas->store(json_decode($msg->body));
 });
-
-// Create a worker test here
