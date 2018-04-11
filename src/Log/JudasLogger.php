@@ -53,7 +53,7 @@ class JudasLogger implements LoggerInterface
             $dot->set($key, $value);
         }
 
-        return $dot->toJson();
+        return json_encode($dot->all());
     }
 
     private function setHermesInstance()
