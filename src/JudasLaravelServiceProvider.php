@@ -12,7 +12,7 @@ class JudasLaravelServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/Config/Judas.php' => config_path('judas.php'),
+            __DIR__ . '/Config/judas.php' => config_path('judas.php'),
         ], 'config');
     }
 
