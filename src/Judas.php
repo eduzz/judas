@@ -46,7 +46,7 @@ class Judas
 
     public function setQueueConfig($config = null)
     {
-        if (!$config || empty($config) || count($config) <= 0) {
+        if (!$config || empty($config) || count($config) <= 0 || !is_array($config)) {
             throw new \Error("Queue config cannot be empty");
         }
 
