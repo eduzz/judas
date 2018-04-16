@@ -9,5 +9,7 @@ $judas = new Judas();
 $hermes = new Hermes();
 
 $hermes->addListenerTo('cktsun.invoice.created', function ($msg) use ($judas) {
+    var_dump($msg->body);
+
     $judas->store(json_decode($msg->body));
 });

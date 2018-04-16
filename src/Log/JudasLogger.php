@@ -58,7 +58,7 @@ class JudasLogger implements LoggerInterface
 
     private function setHermesInstance()
     {
-        if (!$this->hermes instanceof Hermes) {
+        if (!($this->hermes instanceof Hermes)) {
             if ($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
                 $this->hermes = new Hermes($this->queueConfig);
             } else {
