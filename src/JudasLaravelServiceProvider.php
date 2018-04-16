@@ -28,9 +28,9 @@ class JudasLaravelServiceProvider extends ServiceProvider
             }
 
             if (!empty(config('judas.elastic_connection'))) {
-                $judas->setElasticConfig(config('judas.elastic_connection'));
+                $judas->setKeeperConfig(config('judas.elastic_connection'));
             } else {
-                $judas->setElasticConfig(config('judas.default_elastic_connection'));
+                $judas->setKeeperConfig(config('judas.default_elastic_connection'));
             }
 
             return $judas;
