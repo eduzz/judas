@@ -12,7 +12,7 @@ $judas->setQueueConfig([
     'password' => 'guest'
 ]);
 
-while(true) {
+while (true) {
     $judas->log(
         'cktsun.invoice.created',
         [
@@ -25,4 +25,3 @@ while(true) {
         ]
     );
 }
-

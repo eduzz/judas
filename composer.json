@@ -17,12 +17,11 @@
         "phpunit/phpunit": "^7.0"
     },
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.3",
         "ext-bcmath": "*",
         "ext-mbstring": "*",
         "adbario/php-dot-notation": "^2.0",
-        "eduzz/hermes": "dev-master",
-        "guzzlehttp/guzzle": "^6.3"
+        "eduzz/hermes": "dev-master"
     },
     "repositories": [
         {
