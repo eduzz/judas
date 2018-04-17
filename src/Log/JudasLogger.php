@@ -23,7 +23,7 @@ class JudasLogger implements LoggerInterface
     public function info($context, $message)
     {
         $this->setContext($context);
-        $this->setMessage($message, Schemas::INFO, 'history');
+        $this->setMessage($message, Schemas::$INFO, 'history');
 
         $this->setHermesInstance();
 

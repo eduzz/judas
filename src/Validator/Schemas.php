@@ -4,7 +4,7 @@ namespace Eduzz\Judas\Validator;
 
 class Schemas
 {
-    const INFO = [
+    public static $INFO = [
         '*agent' => ['choose', 'procedure', 'system', 'user', 'support'],
         '*event.app' => ['choose', 'cktsun', 'myeduzz', 'cktleg', 'myeduzzleg', 'nutror', 'next'],
         '*event.module' => ['type', 'expected' => 'string'],
