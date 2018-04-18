@@ -59,7 +59,7 @@ class Judas
             $this->setLogKeeper($this->getDefaultLogKeeper());
         }
 
-        $this->logKeeper->store($json);
+        return $this->logKeeper->store($json);
     }
 
     public function setLogKeeper(LogKeeperInterface $logKeeper)

@@ -5,6 +5,7 @@ use Eduzz\Judas\Judas;
 
 $judas = new Judas();
 
+// Logando tentativa de login com judas
 $judas->setQueueConfig([
     'host' => 'localhost',
     'port' => 5672,
@@ -13,13 +14,13 @@ $judas->setQueueConfig([
 ]);
 
 $judas->log(
-    'cktsun.invoice.created',
+    'myeduzzleg.user.login',
     [
         'agent' => 'user',
-        'event.data.id' => 123,
-        'user.id' => 123,
-        'user.name' => 'johndoe',
-        'user.ip' => '45.4.72.82',
-        'additional_data.amount' => 900.00
+        'event.data.id' => 999,
+        'user.id' => 999,
+        'user.name' => "angelorodriigo.rs@gmail.com",
+        'user.ip' => "127.0.0.1",
+        'additional_data.status' => 'success'
     ]
 );

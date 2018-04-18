@@ -18,7 +18,9 @@ class JudasKeeper implements LogKeeperInterface
             $this->setElasticConfig($this->getDefaultElasticConfig());
         }
 
-        $this->send($json);
+        $data = $this->send($json);
+
+        return $data;
     }
 
     private function send($json)
@@ -35,7 +37,7 @@ class JudasKeeper implements LogKeeperInterface
         $headers = [];
         $headers[] = 'Content-Type: application/json';
 
-        if ($this->config['user'] != '' && $this->config['user']) {
+        if ($this->config['user'] != '' && $this->config['pass'] != '') {
             $token = base64_encode($this->config['user'] . ':' . $this->config['pass']);
 
             $headers[] = 'Authorization:Basic ' . $token;
@@ -59,7 +61,7 @@ class JudasKeeper implements LogKeeperInterface
 
     private function getElasticUrlForIndex($index)
     {
-        $url = 'http://' . $this->config['host'] . ':' .
+        $url = 'https://' . $this->config['host'] . ':' .
             $this->config['port'] . '/' .
             $index . '/default';
 
