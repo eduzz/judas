@@ -37,7 +37,7 @@ class JudasKeeper implements LogKeeperInterface
         $headers = [];
         $headers[] = 'Content-Type: application/json';
 
-        if ($this->config['user'] != '' && $this->config['pass'] != '') {
+        if ($this->config['user'] != '' && $this->config['user']) {
             $token = base64_encode($this->config['user'] . ':' . $this->config['pass']);
 
             $headers[] = 'Authorization:Basic ' . $token;
