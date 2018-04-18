@@ -95,13 +95,6 @@ class JudasKeeper implements LogKeeperInterface
             throw new \InvalidArgumentException("Host must be an string, {$config['host']} given");
         }
 
-        if (!array_key_exists('port', $config)) {
-            throw new \InvalidArgumentException("Config must have port attribute");
-        }
-        if (gettype($config['port']) != 'integer') {
-            throw new \InvalidArgumentException("Port must be an integer, {$config['port']} given");
-        }
-
         $this->config = $config;
     }
 }

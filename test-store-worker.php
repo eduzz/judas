@@ -15,6 +15,15 @@ $hermes->setConfig([
     'password' => 'guest'
 ]);
 
+$judas->setKeeperConfig([
+    'host' => 'localhost',
+    'port' => 9200,
+    'user' => 'elastic',
+    'pass' => ''
+]);
+
 $hermes->addListenerTo('myeduzzleg.user.login', function ($msg) use ($judas) {
     var_dump(json_decode($msg->body));
+
+    // $judas->store(json_decode($msg->body));
 });
