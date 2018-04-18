@@ -61,9 +61,13 @@ class JudasKeeper implements LogKeeperInterface
 
     private function getElasticUrlForIndex($index)
     {
-        $url = 'https://' . $this->config['host'] . ':' .
-            $this->config['port'] . '/' .
-            $index . '/default';
+        $url = 'http://' . $this->config['host'];
+
+        if(($this->config['port']) != null) {
+            $url .= ':' . $this->config['port'];
+        }
+
+        $url .= '/' . $index . '/default';
 
         return $url;
     }
