@@ -2,11 +2,12 @@
 
 namespace Eduzz\Judas\Tests;
 
+use Mockery as M;
+
 use Eduzz\Judas\Validator\LogValidator;
 use Eduzz\Judas\Validator\Schemas;
-use PHPUnit\Framework\TestCase;
 
-class LogValidatorTest extends TestCase
+class LogValidatorTest extends BaseTest
 {
     public function testConstructorAndInstance()
     {
@@ -22,7 +23,7 @@ class LogValidatorTest extends TestCase
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
             ],
-            Schemas::INFO
+            Schemas::$INFO
         );
 
         $this->assertInstanceOf(LogValidator::class, $logValidator);
@@ -42,7 +43,7 @@ class LogValidatorTest extends TestCase
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
             ],
-            Schemas::INFO
+            Schemas::$INFO
         );
 
         $this->assertTrue($logValidator->isValid());
@@ -62,7 +63,7 @@ class LogValidatorTest extends TestCase
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
             ],
-            Schemas::INFO
+            Schemas::$INFO
         );
 
         $this->assertFalse($logValidator->isValid());
@@ -82,7 +83,7 @@ class LogValidatorTest extends TestCase
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
             ],
-            Schemas::INFO
+            Schemas::$INFO
         );
 
         $this->assertFalse($logValidator->isValid());
@@ -102,7 +103,7 @@ class LogValidatorTest extends TestCase
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
             ],
-            Schemas::INFO
+            Schemas::$INFO
         );
 
         $this->assertFalse($logValidator->isValid());
@@ -122,7 +123,7 @@ class LogValidatorTest extends TestCase
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
             ],
-            Schemas::INFO
+            Schemas::$INFO
         );
 
         $this->assertFalse($logValidator->isValid());
