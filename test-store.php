@@ -8,8 +8,8 @@ $judas = new Judas();
 $judas->setKeeperConfig([
     'host' => 'localhost',
     'port' => 9200,
-    'user' => 'elastic',
-    'pass' => ''
+    'username' => 'elastic',
+    'password' => ''
 ]);
 
 $data = [

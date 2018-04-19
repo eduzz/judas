@@ -7,7 +7,7 @@ $judas = new Judas();
 
 // Logando tentativa de login com judas
 $judas->setQueueConfig([
-    'host' => 'localhost',
+    'host' => 'ec2-54-242-180-212.compute-1.amazonaws.com',
     'port' => 5672,
     'username' => 'guest',
     'password' => 'guest'

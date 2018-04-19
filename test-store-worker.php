@@ -9,17 +9,17 @@ $judas = new Judas();
 $hermes = new Hermes();
 
 $hermes->setConfig([
-    'host' => 'localhost',
+    'host' => 'ec2-54-242-180-212.compute-1.amazonaws.com',
     'port' => 5672,
     'username' => 'guest',
     'password' => 'guest'
 ]);
 
 $judas->setKeeperConfig([
-    'host' => 'localhost',
-    'port' => 9200,
-    'user' => 'elastic',
-    'pass' => ''
+    'host' => 'search-eduzz-43w3dzztjdgcnhain5wjzdn3lu.us-east-1.es.amazonaws.com',
+    'port' => null,
+    'username' => '',
+    'password' => ''
 ]);
 
 $hermes->addListenerTo('myeduzzleg.user.login', function ($msg) use ($judas) {

@@ -160,8 +160,8 @@ $judas = new Judas();
 $judas->setQueueConfig([
     'host' => 'customHost',
     'port' => 1234,
-    'user' => 'customUser',
-    'pass' => 'customPassword'
+    'username' => 'customUser',
+    'password' => 'customPassword'
 ]);
 
 $judas->log('cktsun.invoice.created',
