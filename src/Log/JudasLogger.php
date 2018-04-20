@@ -16,7 +16,7 @@ class JudasLogger implements LoggerInterface
 
     private $context;
 
-    private $hermes;
+    private $queueManager;
 
     private $queueConfig;
 
@@ -25,9 +25,11 @@ class JudasLogger implements LoggerInterface
         $this->setContext($context);
         $this->setMessage($message, Schemas::$INFO, 'history');
 
-        $this->setHermesInstance();
+        if (!($this->queueManager instanceof Hermes)) {
+            $this->setQueueManager($this->getDefaultQueueManager());
+        }
 
-        $this->hermes->publish(
+        $this->queueManager->publish(
             new Info($context, $this->getMessageAsJson())
         );
     }
@@ -56,15 +58,21 @@ class JudasLogger implements LoggerInterface
         return json_encode($dot->all());
     }
 
-    private function setHermesInstance()
+    public function setQueueManager($manager) {
+        $this->queueManager = $manager;
+
+        return $this;
+    }
+
+    private function getDefaultQueueManager()
     {
-        if (!($this->hermes instanceof Hermes)) {
-            if ($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
-                $this->hermes = new Hermes($this->queueConfig);
-            } else {
-                $this->hermes = new Hermes();
-            }
+        if ($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
+            $queueManager = new Hermes($this->queueConfig);
+        } else {
+            $queueManager = new Hermes();
         }
+
+        return $queueManager;
     }
 
     public function setQueueConfig($config = null)
