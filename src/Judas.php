@@ -89,5 +89,7 @@ class Judas
         }
 
         $this->keeperConfig = $config;
+
+        return $this;
     }
 }

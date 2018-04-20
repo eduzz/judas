@@ -59,7 +59,7 @@ class JudasTest extends BaseTest
     public function testJudasShouldSetEmptyArrayConfigAndThrowError() {
         $this->expectException(\Error::class);
 
-        $args = null; // Empty to Force Error
+        $args = null; // Empty to force error
 
         $judas = new Judas();
 
@@ -87,5 +87,28 @@ class JudasTest extends BaseTest
         $response = $judas->store($jsonArgument);
 
         $this->assertEquals($return, $response);
+    }
+
+    public function testJudasShouldSetKeeperConfig() {
+        $args = [
+            'host' => 'localhost',
+            'port' => 9200,
+            'user' => 'elastic',
+            'password' => 'elastic'
+        ];
+
+        $judas = new Judas();
+        $response = $judas->setKeeperConfig($args);
+
+        $this->assertSame($judas, $response);
+    }
+
+    public function testJudasShouldSetEmptyKeeperConfigAndThrowError() {
+        $this->expectException(\Error::class);
+
+        $args = null; // Empty to force error
+
+        $judas = new Judas();
+        $judas->setKeeperConfig($args);
     }
 }
