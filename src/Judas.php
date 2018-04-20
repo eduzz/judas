@@ -26,6 +26,8 @@ class Judas
         }
 
         $this->logger->info($context, $messageData);
+
+        return $this;
     }
 
     public function setLogger(LoggerInterface $logger)
@@ -51,11 +53,13 @@ class Judas
         }
 
         $this->queueConfig = $config;
+
+        return $this;
     }
 
     public function store($json)
     {
-        if (!($this->logger instanceof LogKeeperInterface)) {
+        if (!($this->logKeeper instanceof LogKeeperInterface)) {
             $this->setLogKeeper($this->getDefaultLogKeeper());
         }
 
