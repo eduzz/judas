@@ -50,7 +50,7 @@ class JudasKeeper implements LogKeeperInterface
         return $response;
     }
 
-    private function getAttributeValueFromJson($attribute, $json)
+    public function getAttributeValueFromJson($attribute, $json)
     {
         $decoded = json_decode($json);
 
@@ -98,5 +98,7 @@ class JudasKeeper implements LogKeeperInterface
         }
 
         $this->config = $config;
+
+        return $this;
     }
 }
