@@ -32,6 +32,8 @@ class JudasLogger implements LoggerInterface
         $this->queueManager->publish(
             new Info($context, $this->getMessageAsJson())
         );
+
+        return $this;
     }
 
     public function setMessage($messageData, $schema, $index)
