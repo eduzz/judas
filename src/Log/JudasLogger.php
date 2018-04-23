@@ -84,6 +84,8 @@ class JudasLogger implements LoggerInterface
         }
 
         $this->queueConfig = $config;
+
+        return $this;
     }
 
     private function setDefaultParamsOnArray(&$array, $context, $index)
