@@ -9,7 +9,6 @@ class Schemas
         '*event.app' => ['choose', 'cktsun', 'myeduzz', 'cktleg', 'myeduzzleg', 'nutror', 'next'],
         '*event.module' => ['type', 'expected' => 'string'],
         '*event.action' => ['type', 'expected' => 'string'],
-        '*event.data.id' => ['type', 'expected' => 'integer'],
         '*event.date' => [
             'regex',
             'pattern' => '/^\b[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z\b/',
