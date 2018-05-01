@@ -89,26 +89,6 @@ class LogValidatorTest extends BaseTest
         $this->assertFalse($logValidator->isValid());
     }
 
-    public function testValidateWichShouldBeInvalidBecauseHaveInvalidType()
-    {
-        $logValidator = new LogValidator(
-            [
-                'agent' => 'user',
-                'event.app' => 'cktsun',
-                'event.module' => 'invoice',
-                'event.action' => 'created',
-                'event.date' => '2018-04-06T14:10:57Z',
-                'event.data.id' => 'INVALIDTYPE',
-                'user.id' => 12312,
-                'user.name' => 'johndoe',
-                'user.ip' => '127.0.0.1'
-            ],
-            Schemas::$INFO
-        );
-
-        $this->assertFalse($logValidator->isValid());
-    }
-
     public function testValidateWichShouldBeInvalidBecauseDontPassInRegex()
     {
         $logValidator = new LogValidator(
@@ -132,12 +112,12 @@ class LogValidatorTest extends BaseTest
     public function testValidateShouldReturnLastErrorMessage() {
         $logValidator = new LogValidator(
             [
-                'agent' => 'user',
+                'agent' => 'INVALID_AGENT',
                 'event.app' => 'cktsun',
                 'event.module' => 'invoice',
                 'event.action' => 'created',
                 'event.date' => '2018-04-06T14:10:57Z',
-                'event.data.id' => 'INVALIDTYPE',
+                'event.data.id' => 3,
                 'user.id' => 12312,
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
@@ -149,7 +129,7 @@ class LogValidatorTest extends BaseTest
         $logValidator->isValid();
 
         $this->assertEquals(
-            "Type of INVALIDTYPE is invalid, expecting: integer on event.data.id",
+            "Value INVALID_AGENT is invalid, expecting one of these: ['procedure','system','user','support']",
             $logValidator->getLastValidationErrorMessage()
         );
     }

@@ -56,7 +56,7 @@ class JudasLoggerTest extends BaseTest
         $args = [
             'topic' => 'cktsun.module.action',
             'message' => [
-                'agent' => 'user',
+                'agent' => 'INVALID_AGENT',
                 'event.date' => '2018-04-06T14:10:57Z',
                 'event.data.id' => '2842',
                 'user.id' => 12312,
