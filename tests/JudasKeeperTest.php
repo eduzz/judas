@@ -9,7 +9,8 @@ use Eduzz\Judas\LogKeeper\JudasKeeper;
 
 class JudasKeeperTest extends BaseTest
 {
-    public function testJudasKeeperShouldSetConfig() {
+    public function testJudasKeeperShouldSetConfig() 
+    {
         $args = [
             'host' => 'localhost',
             'port' => 9200,
@@ -25,7 +26,8 @@ class JudasKeeperTest extends BaseTest
         );
     }
 
-    public function testJudasKeeperShouldSetEmptyConfigAndFail() {
+    public function testJudasKeeperShouldSetEmptyConfigAndFail() 
+    {
         $this->expectException(\InvalidArgumentException::class);
 
         $args = null;
@@ -35,7 +37,8 @@ class JudasKeeperTest extends BaseTest
         $judasKeeper->setElasticConfig($args);
     }
 
-    public function testJudasKeeperShouldSetConfigWithoutHostPropertyAndFail() {
+    public function testJudasKeeperShouldSetConfigWithoutHostPropertyAndFail() 
+    {
         $this->expectException(\InvalidArgumentException::class);
 
         $args = [
@@ -50,7 +53,8 @@ class JudasKeeperTest extends BaseTest
         $judasKeeper->setElasticConfig($args);
     }
 
-    public function testJudasKeeperShouldSetConfigWithWrongHostPropertyTypeAndFail() {
+    public function testJudasKeeperShouldSetConfigWithWrongHostPropertyTypeAndFail() 
+    {
         $this->expectException(\InvalidArgumentException::class);
 
         $args = [
@@ -65,13 +69,16 @@ class JudasKeeperTest extends BaseTest
         $judasKeeper->setElasticConfig($args);
     }
 
-    public function testJudasKeeperShouldReturnAValueFromAJsonString() {
+    public function testJudasKeeperShouldReturnAValueFromAJsonString() 
+    {
         $args = [
             'attribute',
-            json_encode([
+            json_encode(
+                [
                 'attribute' => 'This is the expected value.',
                 'not_the_attribute' => 1
-            ])
+                ]
+            )
         ];
 
         $judasKeeper = new JudasKeeper();
@@ -79,14 +86,17 @@ class JudasKeeperTest extends BaseTest
         $this->assertEquals("This is the expected value.", $judasKeeper->getAttributeValueFromJson($args[0], $args[1]));
     }
 
-    public function testJudasKeeperShouldFailWhenTryToReturnValueFromJsonWithNotExistentAttribute() {
+    public function testJudasKeeperShouldFailWhenTryToReturnValueFromJsonWithNotExistentAttribute() 
+    {
         $this->expectException(\Error::class);
 
         $args = [
             'attribute',
-            json_encode([
+            json_encode(
+                [
                 'not_the_attribute' => 1
-            ])
+                ]
+            )
         ];
 
         $judasKeeper = new JudasKeeper();

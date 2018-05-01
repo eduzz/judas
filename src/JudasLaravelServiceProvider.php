@@ -11,30 +11,34 @@ class JudasLaravelServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->publishes([
+        $this->publishes(
+            [
             __DIR__ . '/Config/judas.php' => config_path('judas.php'),
-        ], 'config');
+            ], 'config'
+        );
     }
 
     public function register()
     {
-        $this->app->bind('Eduzz\Judas\Judas', function ($app) {
-            $judas = new Judas();
+        $this->app->bind(
+            'Eduzz\Judas\Judas', function ($app) {
+                $judas = new Judas();
 
-            if (!empty(config('judas.queue_connection'))) {
-                $judas->setQueueConfig(config('judas.queue_connection'));
-            } else {
-                $judas->setQueueConfig(config('judas.default_queue_connection'));
+                if (!empty(config('judas.queue_connection'))) {
+                    $judas->setQueueConfig(config('judas.queue_connection'));
+                } else {
+                    $judas->setQueueConfig(config('judas.default_queue_connection'));
+                }
+
+                if (!empty(config('judas.elastic_connection'))) {
+                    $judas->setKeeperConfig(config('judas.elastic_connection'));
+                } else {
+                    $judas->setKeeperConfig(config('judas.default_elastic_connection'));
+                }
+
+                return $judas;
             }
-
-            if (!empty(config('judas.elastic_connection'))) {
-                $judas->setKeeperConfig(config('judas.elastic_connection'));
-            } else {
-                $judas->setKeeperConfig(config('judas.default_elastic_connection'));
-            }
-
-            return $judas;
-        });
+        );
     }
 
     public function provides()

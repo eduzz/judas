@@ -10,7 +10,8 @@ use Eduzz\Judas\LogKeeper\LogKeeperInterface;
 
 class JudasTest extends BaseTest
 {
-    public function testJudasCanBeInstantiated() {
+    public function testJudasCanBeInstantiated() 
+    {
         $args = [
             'app.module.action',
             [
@@ -43,7 +44,8 @@ class JudasTest extends BaseTest
         );
     }
 
-    public function testJudasShouldSetQueueConfig() {
+    public function testJudasShouldSetQueueConfig() 
+    {
         $args = [
             'host' => 'localhost',
             'port' => 5672,
@@ -56,7 +58,8 @@ class JudasTest extends BaseTest
         $this->assertSame($judas, $judas->setQueueConfig($args));
     }
 
-    public function testJudasShouldSetEmptyArrayConfigAndThrowError() {
+    public function testJudasShouldSetEmptyArrayConfigAndThrowError() 
+    {
         $this->expectException(\Error::class);
 
         $args = null; // Empty to force error
@@ -66,12 +69,15 @@ class JudasTest extends BaseTest
         $judas->setQueueConfig($args);
     }
 
-    public function testJudasShouldStoreALog() {
-        $jsonArgument = json_encode([
+    public function testJudasShouldStoreALog() 
+    {
+        $jsonArgument = json_encode(
+            [
             'id' => 1,
             'message' => 'Nothing to see here.',
             'index' => 'history'
-        ]);
+            ]
+        );
 
         $return = '{"_index":"history","_type":"default","_id":"62V642IBayGLmdFUVWTo","_version":1,"result":"created","_shards":{"total":1,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1}';
 
@@ -89,7 +95,8 @@ class JudasTest extends BaseTest
         $this->assertEquals($return, $response);
     }
 
-    public function testJudasShouldSetKeeperConfig() {
+    public function testJudasShouldSetKeeperConfig() 
+    {
         $args = [
             'host' => 'localhost',
             'port' => 9200,
@@ -103,7 +110,8 @@ class JudasTest extends BaseTest
         $this->assertSame($judas, $response);
     }
 
-    public function testJudasShouldSetEmptyKeeperConfigAndThrowError() {
+    public function testJudasShouldSetEmptyKeeperConfigAndThrowError() 
+    {
         $this->expectException(\Error::class);
 
         $args = null; // Empty to force error

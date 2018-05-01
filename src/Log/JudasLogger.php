@@ -60,7 +60,8 @@ class JudasLogger implements LoggerInterface
         return json_encode($dot->all());
     }
 
-    public function setQueueManager($manager) {
+    public function setQueueManager($manager) 
+    {
         $this->queueManager = $manager;
 
         return $this;

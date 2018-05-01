@@ -109,7 +109,8 @@ class LogValidatorTest extends BaseTest
         $this->assertFalse($logValidator->isValid());
     }
 
-    public function testValidateShouldReturnLastErrorMessage() {
+    public function testValidateShouldReturnLastErrorMessage() 
+    {
         $logValidator = new LogValidator(
             [
                 'agent' => 'INVALID_AGENT',
@@ -134,7 +135,8 @@ class LogValidatorTest extends BaseTest
         );
     }
 
-    public function testValidateWithoutSchema() {
+    public function testValidateWithoutSchema() 
+    {
         $logValidator = new LogValidator(
             [
                 'agent' => 'user',
@@ -153,7 +155,8 @@ class LogValidatorTest extends BaseTest
         $this->assertTrue($logValidator->isValid());
     }
 
-    public function testValidateShouldSetAnEmptyArrayToValidateAndThrowError() {
+    public function testValidateShouldSetAnEmptyArrayToValidateAndThrowError() 
+    {
         $this->expectException(\Error::class);
 
         $logValidator = new LogValidator(

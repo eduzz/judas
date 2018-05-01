@@ -12,7 +12,8 @@ use Eduzz\Judas\HermesMessages\Info;
 
 class JudasLoggerTest extends BaseTest
 {
-    public function testJudasLoggerShouldLogAnInfo() {
+    public function testJudasLoggerShouldLogAnInfo() 
+    {
         $args = [
             'topic' => 'cktsun.module.action',
             'message' => [
@@ -27,14 +28,18 @@ class JudasLoggerTest extends BaseTest
 
         $hermesMock = M::mock(Hermes::class)
             ->shouldReceive('publish')
-            ->withArgs(function ($obj) {
-                return $obj instanceof Info;
-            })
-            ->andReturnUsing(function ($obj) use ($args) {
-                $obj->topic = $args['topic'];
-                $obj->message = $args['message'];
-                return $obj;
-            })
+            ->withArgs(
+                function ($obj) {
+                    return $obj instanceof Info;
+                }
+            )
+            ->andReturnUsing(
+                function ($obj) use ($args) {
+                    $obj->topic = $args['topic'];
+                    $obj->message = $args['message'];
+                    return $obj;
+                }
+            )
             ->getMock();
 
         $judasLogger = new JudasLogger();
@@ -50,7 +55,8 @@ class JudasLoggerTest extends BaseTest
         );
     }
 
-    public function testJudasLoggerShouldLogAnInfoWithInvalidMessageAndFail() {
+    public function testJudasLoggerShouldLogAnInfoWithInvalidMessageAndFail() 
+    {
         $this->expectException(\Error::class);
 
         $args = [
@@ -67,14 +73,18 @@ class JudasLoggerTest extends BaseTest
 
         $hermesMock = M::mock(Hermes::class)
             ->shouldReceive('publish')
-            ->withArgs(function ($obj) {
-                return $obj instanceof Info;
-            })
-            ->andReturnUsing(function ($obj) use ($args) {
-                $obj->topic = $args['topic'];
-                $obj->message = $args['message'];
-                return $obj;
-            })
+            ->withArgs(
+                function ($obj) {
+                    return $obj instanceof Info;
+                }
+            )
+            ->andReturnUsing(
+                function ($obj) use ($args) {
+                    $obj->topic = $args['topic'];
+                    $obj->message = $args['message'];
+                    return $obj;
+                }
+            )
             ->getMock();
 
         $judasLogger = new JudasLogger();
@@ -87,7 +97,8 @@ class JudasLoggerTest extends BaseTest
         );
     }
 
-    public function testJudasShouldSetConfig() {
+    public function testJudasShouldSetConfig() 
+    {
         $config = [
             'host' => 'localhost',
             'port' => 5672,
@@ -100,7 +111,8 @@ class JudasLoggerTest extends BaseTest
         $this->assertSame($judasLogger, $judasLogger->setQueueConfig($config));
     }
 
-    public function testJudasShouldSetEmptyConfigAndFail() {
+    public function testJudasShouldSetEmptyConfigAndFail() 
+    {
         $this->expectException(\Error::class);
 
         $config = null;
@@ -110,7 +122,8 @@ class JudasLoggerTest extends BaseTest
         $judasLogger->setQueueConfig($config);
     }
 
-    public function testJudasShouldSetEmptyContextAndFail() {
+    public function testJudasShouldSetEmptyContextAndFail() 
+    {
         $this->expectException(\Error::class);
 
         $context = null;
