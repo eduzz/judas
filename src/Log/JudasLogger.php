@@ -30,7 +30,7 @@ class JudasLogger implements LoggerInterface
         }
 
         $this->queueManager->publish(
-            new Info($context, $this->getMessageAsJson())
+            new Info($this->getMessageAsJson())
         );
 
         return $this;
@@ -57,10 +57,10 @@ class JudasLogger implements LoggerInterface
             $dot->set($key, $value);
         }
 
-        return json_encode($dot->all());
+        return $dot->all();
     }
 
-    public function setQueueManager($manager) 
+    public function setQueueManager($manager)
     {
         $this->queueManager = $manager;
 
@@ -98,6 +98,8 @@ class JudasLogger implements LoggerInterface
         $array['event.app'] = $explodedContext[0];
         $array['event.module'] = $explodedContext[1];
         $array['event.action'] = $explodedContext[2];
+
+        return $this;
     }
 
     public function setContext($context)

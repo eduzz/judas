@@ -6,8 +6,8 @@ use Eduzz\Hermes\Message\AbstractMessage;
 
 class Info extends AbstractMessage
 {
-    public function __construct($context, $payload)
+    public function __construct($payload)
     {
-        parent::__construct($context, $payload);
+        parent::__construct('judas.store.info', $payload);
     }
 }
