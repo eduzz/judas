@@ -23,7 +23,7 @@
         "ext-bcmath": "*",
         "ext-mbstring": "*",
         "adbario/php-dot-notation": "^2.0",
-        "eduzz/hermes": "dev-master"
+        "eduzz/hermes": "dev-development"
     },
     "repositories": [
         {
