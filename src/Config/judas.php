@@ -5,6 +5,8 @@ return array(
 
     'queue_connection' => null,
 
+    'developer_mode' => false,
+
     'default_elastic_connection' => array(
         'host'                => 'localhost',
         'port'                => 9200,

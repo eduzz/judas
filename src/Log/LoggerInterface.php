@@ -4,5 +4,5 @@ namespace Eduzz\Judas\Log;
 
 interface LoggerInterface
 {
-    public function info($context, $message);
+    public function info($context, $message, $dev);
 }

@@ -19,13 +19,15 @@ class Judas
 
     private $keeperConfig;
 
+    public $dev = false;
+
     public function log($context, $messageData)
     {
         if (!($this->logger instanceof LoggerInterface)) {
             $this->setLogger($this->getDefaultLogger());
         }
 
-        $this->logger->info($context, $messageData);
+        $this->logger->info($context, $messageData, $this->dev);
 
         return $this;
     }

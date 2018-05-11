@@ -20,10 +20,17 @@ class JudasLogger implements LoggerInterface
 
     private $queueConfig;
 
-    public function info($context, $message)
+    public function info($context, $message, $dev)
     {
         $this->setContext($context);
-        $this->setMessage($message, Schemas::$INFO, 'history');
+
+        $index = 'history';
+
+        if($dev) {
+            $index = $index . "-dev";
+        }
+
+        $this->setMessage($message, Schemas::$INFO, $index);
 
         if (!($this->queueManager instanceof Hermes)) {
             $this->setQueueManager($this->getDefaultQueueManager());
