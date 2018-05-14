@@ -5,7 +5,7 @@ return array(
 
     'queue_connection' => null,
 
-    'developer_mode' => false,
+    'environment' => 'production',
 
     'default_elastic_connection' => array(
         'host'                => 'localhost',

@@ -19,7 +19,7 @@ class Judas
 
     private $keeperConfig;
 
-    public $dev = false;
+    public $environment = 'production';
 
     public function log($context, $messageData)
     {
@@ -27,7 +27,7 @@ class Judas
             $this->setLogger($this->getDefaultLogger());
         }
 
-        $this->logger->info($context, $messageData, $this->dev);
+        $this->logger->info($context, $messageData, $this->environment);
 
         return $this;
     }

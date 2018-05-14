@@ -36,7 +36,12 @@ class JudasLaravelServiceProvider extends ServiceProvider
                     $judas->setKeeperConfig(config('judas.default_elastic_connection'));
                 }
 
-                $judas->dev = config('judas.developer_mode');
+                $judas->environment = 'production';
+
+                if(!empty(config('judas.environment'))) {
+                    $judas->environment = config('judas.environment');
+                }
+
                 return $judas;
             }
         );

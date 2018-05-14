@@ -20,15 +20,11 @@ class JudasLogger implements LoggerInterface
 
     private $queueConfig;
 
-    public function info($context, $message, $dev)
+    public function info($context, $message, $environment)
     {
         $this->setContext($context);
 
-        $index = 'history';
-
-        if($dev) {
-            $index = $index . "-dev";
-        }
+        $index = $this->getIndexForEnvironment($environment);
 
         $this->setMessage($message, Schemas::$INFO, $index);
 
@@ -41,6 +37,16 @@ class JudasLogger implements LoggerInterface
         );
 
         return $this;
+    }
+
+    public function getIndexForEnvironment($environment) {
+        $index = 'history';
+
+        if($environment != 'production') {
+            $index = $index . '-' . $environment;
+        }
+
+        return $index;
     }
 
     public function setMessage($messageData, $schema, $index)
