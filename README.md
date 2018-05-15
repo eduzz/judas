@@ -42,7 +42,7 @@ O próximo passo é registrar o Judas na lista de service providers, dentro do s
 ```php
 'aliases'  => [
 	// ...
-	'Hermes'  =>  Eduzz\Judas\Facades\JudasFacade::class,
+	'Judas'  =>  Eduzz\Judas\Facades\JudasFacade::class,
 ],
 ```
 
