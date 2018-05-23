@@ -86,12 +86,10 @@ class JudasLogger implements LoggerInterface
     private function getDefaultQueueManager()
     {
         if ($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
-            $queueManager = new Hermes($this->queueConfig);
-        } else {
-            $queueManager = new Hermes();
+            return new Hermes($this->queueConfig);
         }
 
-        return $queueManager;
+        return new Hermes();
     }
     //@codeCoverageIgnoreEnd
 
