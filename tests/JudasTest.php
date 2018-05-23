@@ -98,25 +98,32 @@ class JudasTest extends BaseTest
         $this->assertEquals($return, $response);
     }
 
-    public function testJudasShouldStoreLog() {
+    public function testJudasShouldStoreLog() 
+    {
         $judas = new Judas();
 
-        $judas->setKeeperConfig([
+        $judas->setKeeperConfig(
+            [
             'host' => '127.0.0.1',
             'port' => '9200',
             'username' => 'elastic',
             'password' => ''
-        ]);
+            ]
+        );
 
-        $response = $judas->store(json_encode([
-            'agent' => 'user',
-            'event.date' => '2018-04-06T14:10:57Z',
-            'event.data.id' => 2842,
-            'user.id' => 12312,
-            'user.name' => 'johndoe',
-            'user.ip' => '127.0.0.1',
-            'index' => 'history'
-        ]));
+        $response = $judas->store(
+            json_encode(
+                [
+                'agent' => 'user',
+                'event.date' => '2018-04-06T14:10:57Z',
+                'event.data.id' => 2842,
+                'user.id' => 12312,
+                'user.name' => 'johndoe',
+                'user.ip' => '127.0.0.1',
+                'index' => 'history'
+                ]
+            )
+        );
 
         $this->assertFalse($response);
     }

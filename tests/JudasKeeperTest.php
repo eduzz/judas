@@ -37,18 +37,23 @@ class JudasKeeperTest extends BaseTest
         $judasKeeper->setElasticConfig($args);
     }
 
-    public function testJudasKeeperShouldStoreLog() {
+    public function testJudasKeeperShouldStoreLog() 
+    {
         $judasKeeper = new JudasKeeper();
 
-        $response = $judasKeeper->store(json_encode([
-            'agent' => 'user',
-            'event.date' => '2018-04-06T14:10:57Z',
-            'event.data.id' => 2842,
-            'user.id' => 12312,
-            'user.name' => 'johndoe',
-            'user.ip' => '127.0.0.1',
-            'index' => 'history'
-        ]));
+        $response = $judasKeeper->store(
+            json_encode(
+                [
+                'agent' => 'user',
+                'event.date' => '2018-04-06T14:10:57Z',
+                'event.data.id' => 2842,
+                'user.id' => 12312,
+                'user.name' => 'johndoe',
+                'user.ip' => '127.0.0.1',
+                'index' => 'history'
+                ]
+            )
+        );
 
         $this->assertFalse($response);
     }

@@ -41,7 +41,8 @@ class JudasLogger implements LoggerInterface
         return $this;
     }
 
-    public function getIndexForEnvironment($environment) {
+    public function getIndexForEnvironment($environment) 
+    {
         $index = 'history';
 
         if($environment != 'production') {
