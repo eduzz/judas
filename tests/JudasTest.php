@@ -10,14 +10,15 @@ use Eduzz\Judas\LogKeeper\LogKeeperInterface;
 
 class JudasTest extends BaseTest
 {
-    public function testJudasCanBeInstantiated() 
+    public function testJudasCanBeInstantiated()
     {
         $args = [
             'app.module.action',
             [
                 'id' => 1,
                 'message' => 'Nothing to see here.'
-            ]
+            ],
+            'development'
         ];
 
         $judasLoggerMock = M::mock(JudasLogger::class)
@@ -27,6 +28,8 @@ class JudasTest extends BaseTest
             ->getMock();
 
         $judas = new Judas();
+
+        $judas->environment = 'development';
 
         $judas->setLogger($judasLoggerMock);
 
@@ -44,7 +47,7 @@ class JudasTest extends BaseTest
         );
     }
 
-    public function testJudasShouldSetQueueConfig() 
+    public function testJudasShouldSetQueueConfig()
     {
         $args = [
             'host' => 'localhost',
@@ -58,7 +61,7 @@ class JudasTest extends BaseTest
         $this->assertSame($judas, $judas->setQueueConfig($args));
     }
 
-    public function testJudasShouldSetEmptyArrayConfigAndThrowError() 
+    public function testJudasShouldSetEmptyArrayConfigAndThrowError()
     {
         $this->expectException(\Error::class);
 
@@ -69,7 +72,7 @@ class JudasTest extends BaseTest
         $judas->setQueueConfig($args);
     }
 
-    public function testJudasShouldStoreALog() 
+    public function testJudasShouldStoreALog()
     {
         $jsonArgument = json_encode(
             [
@@ -95,7 +98,30 @@ class JudasTest extends BaseTest
         $this->assertEquals($return, $response);
     }
 
-    public function testJudasShouldSetKeeperConfig() 
+    public function testJudasShouldStoreLog() {
+        $judas = new Judas();
+
+        $judas->setKeeperConfig([
+            'host' => '127.0.0.1',
+            'port' => '9200',
+            'username' => 'elastic',
+            'password' => ''
+        ]);
+
+        $response = $judas->store(json_encode([
+            'agent' => 'user',
+            'event.date' => '2018-04-06T14:10:57Z',
+            'event.data.id' => 2842,
+            'user.id' => 12312,
+            'user.name' => 'johndoe',
+            'user.ip' => '127.0.0.1',
+            'index' => 'history'
+        ]));
+
+        $this->assertFalse($response);
+    }
+
+    public function testJudasShouldSetKeeperConfig()
     {
         $args = [
             'host' => 'localhost',
@@ -110,7 +136,7 @@ class JudasTest extends BaseTest
         $this->assertSame($judas, $response);
     }
 
-    public function testJudasShouldSetEmptyKeeperConfigAndThrowError() 
+    public function testJudasShouldSetEmptyKeeperConfigAndThrowError()
     {
         $this->expectException(\Error::class);
 

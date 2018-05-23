@@ -9,7 +9,7 @@ use Eduzz\Judas\LogKeeper\JudasKeeper;
 
 class JudasKeeperTest extends BaseTest
 {
-    public function testJudasKeeperShouldSetConfig() 
+    public function testJudasKeeperShouldSetConfig()
     {
         $args = [
             'host' => 'localhost',
@@ -26,7 +26,7 @@ class JudasKeeperTest extends BaseTest
         );
     }
 
-    public function testJudasKeeperShouldSetEmptyConfigAndFail() 
+    public function testJudasKeeperShouldSetEmptyConfigAndFail()
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -37,7 +37,23 @@ class JudasKeeperTest extends BaseTest
         $judasKeeper->setElasticConfig($args);
     }
 
-    public function testJudasKeeperShouldSetConfigWithoutHostPropertyAndFail() 
+    public function testJudasKeeperShouldStoreLog() {
+        $judasKeeper = new JudasKeeper();
+
+        $response = $judasKeeper->store(json_encode([
+            'agent' => 'user',
+            'event.date' => '2018-04-06T14:10:57Z',
+            'event.data.id' => 2842,
+            'user.id' => 12312,
+            'user.name' => 'johndoe',
+            'user.ip' => '127.0.0.1',
+            'index' => 'history'
+        ]));
+
+        $this->assertFalse($response);
+    }
+
+    public function testJudasKeeperShouldSetConfigWithoutHostPropertyAndFail()
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -53,7 +69,7 @@ class JudasKeeperTest extends BaseTest
         $judasKeeper->setElasticConfig($args);
     }
 
-    public function testJudasKeeperShouldSetConfigWithWrongHostPropertyTypeAndFail() 
+    public function testJudasKeeperShouldSetConfigWithWrongHostPropertyTypeAndFail()
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -69,7 +85,7 @@ class JudasKeeperTest extends BaseTest
         $judasKeeper->setElasticConfig($args);
     }
 
-    public function testJudasKeeperShouldReturnAValueFromAJsonString() 
+    public function testJudasKeeperShouldReturnAValueFromAJsonString()
     {
         $args = [
             'attribute',
@@ -86,7 +102,7 @@ class JudasKeeperTest extends BaseTest
         $this->assertEquals("This is the expected value.", $judasKeeper->getAttributeValueFromJson($args[0], $args[1]));
     }
 
-    public function testJudasKeeperShouldFailWhenTryToReturnValueFromJsonWithNotExistentAttribute() 
+    public function testJudasKeeperShouldFailWhenTryToReturnValueFromJsonWithNotExistentAttribute()
     {
         $this->expectException(\Error::class);
 
