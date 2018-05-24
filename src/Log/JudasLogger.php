@@ -29,7 +29,9 @@ class JudasLogger implements LoggerInterface
         $this->setMessage($message, Schemas::$INFO, $index);
 
         if (!($this->queueManager instanceof Hermes)) {
+            //@codeCoverageIgnoreStart
             $this->setQueueManager($this->getDefaultQueueManager());
+            //@codeCoverageIgnoreEnd
         }
 
         $this->queueManager->publish(
@@ -39,7 +41,8 @@ class JudasLogger implements LoggerInterface
         return $this;
     }
 
-    public function getIndexForEnvironment($environment) {
+    public function getIndexForEnvironment($environment) 
+    {
         $index = 'history';
 
         if($environment != 'production') {
@@ -80,16 +83,16 @@ class JudasLogger implements LoggerInterface
         return $this;
     }
 
+    //@codeCoverageIgnoreStart
     private function getDefaultQueueManager()
     {
         if ($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
-            $queueManager = new Hermes($this->queueConfig);
-        } else {
-            $queueManager = new Hermes();
+            return new Hermes($this->queueConfig);
         }
 
-        return $queueManager;
+        return new Hermes();
     }
+    //@codeCoverageIgnoreEnd
 
     public function setQueueConfig($config = null)
     {
