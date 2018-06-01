@@ -12,7 +12,7 @@ use Eduzz\Judas\HermesMessages\Info;
 
 class JudasLoggerTest extends BaseTest
 {
-    public function testJudasLoggerShouldLogAnInfo() 
+    public function testJudasLoggerShouldLogAnInfo()
     {
         $args = [
             'topic' => 'cktsun.module.action',
@@ -50,12 +50,13 @@ class JudasLoggerTest extends BaseTest
             $judasLogger,
             $judasLogger->info(
                 $args['topic'],
-                $args['message']
+                $args['message'],
+                'development'
             )
         );
     }
 
-    public function testJudasLoggerShouldLogAnInfoWithInvalidMessageAndFail() 
+    public function testJudasLoggerShouldLogAnInvalidInfoAndFail()
     {
         $this->expectException(\Error::class);
 
@@ -64,7 +65,7 @@ class JudasLoggerTest extends BaseTest
             'message' => [
                 'agent' => 'INVALID_AGENT',
                 'event.date' => '2018-04-06T14:10:57Z',
-                'event.data.id' => '2842',
+                'event.data.id' => 2842,
                 'user.id' => 12312,
                 'user.name' => 'johndoe',
                 'user.ip' => '127.0.0.1'
@@ -91,13 +92,17 @@ class JudasLoggerTest extends BaseTest
 
         $judasLogger->setQueueManager($hermesMock);
 
-        $judasLogger->info(
-            $args['topic'],
-            $args['message']
+        $this->assertSame(
+            $judasLogger,
+            $judasLogger->info(
+                $args['topic'],
+                $args['message'],
+                'development'
+            )
         );
     }
 
-    public function testJudasShouldSetConfig() 
+    public function testJudasShouldSetConfig()
     {
         $config = [
             'host' => 'localhost',
@@ -111,7 +116,7 @@ class JudasLoggerTest extends BaseTest
         $this->assertSame($judasLogger, $judasLogger->setQueueConfig($config));
     }
 
-    public function testJudasShouldSetEmptyConfigAndFail() 
+    public function testJudasShouldSetEmptyConfigAndFail()
     {
         $this->expectException(\Error::class);
 
@@ -122,7 +127,7 @@ class JudasLoggerTest extends BaseTest
         $judasLogger->setQueueConfig($config);
     }
 
-    public function testJudasShouldSetEmptyContextAndFail() 
+    public function testJudasShouldSetEmptyContextAndFail()
     {
         $this->expectException(\Error::class);
 

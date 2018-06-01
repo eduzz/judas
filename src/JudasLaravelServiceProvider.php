@@ -24,19 +24,10 @@ class JudasLaravelServiceProvider extends ServiceProvider
             'Eduzz\Judas\Judas', function ($app) {
                 $judas = new Judas();
 
-                if (!empty(config('judas.queue_connection'))) {
-                    $judas->setQueueConfig(config('judas.queue_connection'));
-                } else {
-                    $judas->setQueueConfig(config('judas.default_queue_connection'));
-                }
+                $judas->setQueueConfig(config('judas.queue_connection'));
+                $judas->setKeeperConfig(config('judas.elastic_connection'));
 
-                if (!empty(config('judas.elastic_connection'))) {
-                    $judas->setKeeperConfig(config('judas.elastic_connection'));
-                } else {
-                    $judas->setKeeperConfig(config('judas.default_elastic_connection'));
-                }
-
-                $judas->environment = 'production';
+                $judas->environment = 'development';
 
                 if(!empty(config('judas.environment'))) {
                     $judas->environment = config('judas.environment');
