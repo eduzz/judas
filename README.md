@@ -26,6 +26,39 @@ Primeiro, vamos adicionar a dependência e o repositório do **Judas** e do **He
 }
 ```
 
+## * Extra para Lumen
+
+Para instação do Judas em um projeto Lumen é necessário adicionar a função global config_path existente no laravel, tal função retorna a pasta das configurações, para isso, crie uma pasta chamada GlobalHelpers dentro de app e então crie um arquivo chamado config_path.php.
+
+```php
+<?php
+
+if (!function_exists('config_path'))
+{
+    /**
+     * Get the configuration path.
+     *
+     * @param string $path
+     * @return string
+     */
+    function config_path($path = '')
+    {
+        return app()->basePath() . '/config' . ($path ? '/' . $path : $path);
+    }
+}
+
+```
+
+E adicione o autoload do helper dentro do seu composer.json uma declaração:
+
+```json
+"autoload": {
+    "files" : [
+        "app/GlobalHelpers/config_path.php"
+    ]
+},
+```
+
 PS: É preciso verificar se você está com a chave conectada ao bitbucket no shell onde vai rodar o composer install.
 
 ### Instalação em projeto Laravel
