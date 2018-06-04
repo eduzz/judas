@@ -37,7 +37,7 @@ class JudasKeeperTest extends BaseTest
         $judasKeeper->setElasticConfig($args);
     }
 
-    public function testJudasKeeperShouldStoreLog() 
+    public function testJudasKeeperShouldStoreLog()
     {
         $judasKeeper = new JudasKeeper();
 
@@ -55,7 +55,7 @@ class JudasKeeperTest extends BaseTest
             )
         );
 
-        $this->assertFalse($response);
+        $this->assertInternalType('array', $response);
     }
 
     public function testJudasKeeperShouldSetConfigWithoutHostPropertyAndFail()

@@ -98,7 +98,7 @@ class JudasTest extends BaseTest
         $this->assertEquals($return, $response);
     }
 
-    public function testJudasShouldStoreLog() 
+    public function testJudasShouldStoreLog()
     {
         $judas = new Judas();
 
@@ -125,7 +125,7 @@ class JudasTest extends BaseTest
             )
         );
 
-        $this->assertFalse($response);
+        $this->assertInternalType('array', $response);
     }
 
     public function testJudasShouldSetKeeperConfig()

@@ -45,9 +45,9 @@ class JudasKeeper implements LogKeeperInterface
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-        $response = curl_exec($ch);
+        curl_exec($ch);
 
-        return $response;
+        return curl_getinfo($ch);
     }
 
     public function getAttributeValueFromJson($attribute, $json)
