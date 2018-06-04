@@ -125,7 +125,7 @@ class JudasTest extends BaseTest
             )
         );
 
-        $this->assertInternalType('array', $response);
+        $this->assertFalse($response);
     }
 
     public function testJudasShouldSetKeeperConfig()
