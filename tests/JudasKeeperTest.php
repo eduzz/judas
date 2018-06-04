@@ -55,7 +55,7 @@ class JudasKeeperTest extends BaseTest
             )
         );
 
-        $this->assertInternalType('array', $response);
+        $this->assertFalse($response);
     }
 
     public function testJudasKeeperShouldSetConfigWithoutHostPropertyAndFail()
