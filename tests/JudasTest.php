@@ -63,7 +63,7 @@ class JudasTest extends BaseTest
 
     public function testJudasShouldSetEmptyArrayConfigAndThrowError()
     {
-        $this->expectException(\Error::class);
+        $this->expectException(\Exception::class);
 
         $args = null; // Empty to force error
 
@@ -145,7 +145,7 @@ class JudasTest extends BaseTest
 
     public function testJudasShouldSetEmptyKeeperConfigAndThrowError()
     {
-        $this->expectException(\Error::class);
+        $this->expectException(\Exception::class);
 
         $args = null; // Empty to force error
 
