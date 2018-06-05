@@ -41,7 +41,7 @@ class JudasLogger implements LoggerInterface
         return $this;
     }
 
-    public function getIndexForEnvironment($environment) 
+    public function getIndexForEnvironment($environment)
     {
         $index = 'history';
 
@@ -59,7 +59,7 @@ class JudasLogger implements LoggerInterface
         $logValidator = new LogValidator($messageData, $schema);
 
         if (!$logValidator->isValid()) {
-            throw new \Error($logValidator->getLastValidationErrorMessage());
+            throw new \Exception($logValidator->getLastValidationErrorMessage());
         }
 
         $this->message = $messageData;
@@ -97,7 +97,7 @@ class JudasLogger implements LoggerInterface
     public function setQueueConfig($config = null)
     {
         if (!$config || empty($config) || count($config) <= 0) {
-            throw new \Error("Config cannot be empty");
+            throw new \Exception("Config cannot be empty");
         }
 
         $this->queueConfig = $config;
@@ -121,7 +121,7 @@ class JudasLogger implements LoggerInterface
     public function setContext($context)
     {
         if (empty($context)) {
-            throw new \Error("Context cannot be empty");
+            throw new \Exception("Context cannot be empty");
         }
 
         $this->context = $context;

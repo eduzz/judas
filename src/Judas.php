@@ -55,7 +55,7 @@ class Judas
     public function setQueueConfig($config = null)
     {
         if (!$config || empty($config) || count($config) <= 0 || !is_array($config)) {
-            throw new \Error("Queue config cannot be empty");
+            throw new \Exception("Queue config cannot be empty");
         }
 
         $this->queueConfig = $config;
@@ -91,7 +91,7 @@ class Judas
     public function setKeeperConfig($config = null)
     {
         if (!is_array($config) || count($config) <= 0) {
-            throw new \Error("Elastic config cannot be empty");
+            throw new \Exception("Elastic config cannot be empty");
         }
 
         $this->keeperConfig = $config;
