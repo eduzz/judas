@@ -58,7 +58,7 @@ class JudasLoggerTest extends BaseTest
 
     public function testJudasLoggerShouldLogAnInvalidInfoAndFail()
     {
-        $this->expectException(\Error::class);
+        $this->expectException(\Exception::class);
 
         $args = [
             'topic' => 'cktsun.module.action',
@@ -118,7 +118,7 @@ class JudasLoggerTest extends BaseTest
 
     public function testJudasShouldSetEmptyConfigAndFail()
     {
-        $this->expectException(\Error::class);
+        $this->expectException(\Exception::class);
 
         $config = null;
 
@@ -129,7 +129,7 @@ class JudasLoggerTest extends BaseTest
 
     public function testJudasShouldSetEmptyContextAndFail()
     {
-        $this->expectException(\Error::class);
+        $this->expectException(\Exception::class);
 
         $context = null;
 

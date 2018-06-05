@@ -109,7 +109,7 @@ class LogValidatorTest extends BaseTest
         $this->assertFalse($logValidator->isValid());
     }
 
-    public function testValidateShouldReturnLastErrorMessage() 
+    public function testValidateShouldReturnLastErrorMessage()
     {
         $logValidator = new LogValidator(
             [
@@ -135,7 +135,7 @@ class LogValidatorTest extends BaseTest
         );
     }
 
-    public function testValidateWithoutSchema() 
+    public function testValidateWithoutSchema()
     {
         $logValidator = new LogValidator(
             [
@@ -155,9 +155,9 @@ class LogValidatorTest extends BaseTest
         $this->assertTrue($logValidator->isValid());
     }
 
-    public function testValidateShouldSetAnEmptyArrayToValidateAndThrowError() 
+    public function testValidateShouldSetAnEmptyArrayToValidateAndThrowError()
     {
-        $this->expectException(\Error::class);
+        $this->expectException(\Exception::class);
 
         $logValidator = new LogValidator(
             [],

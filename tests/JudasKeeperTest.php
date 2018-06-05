@@ -109,7 +109,7 @@ class JudasKeeperTest extends BaseTest
 
     public function testJudasKeeperShouldFailWhenTryToReturnValueFromJsonWithNotExistentAttribute()
     {
-        $this->expectException(\Error::class);
+        $this->expectException(\Exception::class);
 
         $args = [
             'attribute',
