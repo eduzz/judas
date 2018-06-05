@@ -53,7 +53,7 @@ class JudasKeeper implements LogKeeperInterface
         $decoded = json_decode($json);
 
         if (!property_exists($decoded, $attribute)) {
-            throw new \Error("Attribute {$attribute} not found in {$json}");
+            throw new \Exception("Attribute {$attribute} not found in {$json}");
         }
 
         return $decoded->{$attribute};

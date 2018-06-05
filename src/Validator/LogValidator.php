@@ -92,7 +92,7 @@ class LogValidator implements JsonValidatorInterface
     public function setArrayToValidate($toValidate)
     {
         if (!count($toValidate) || empty($toValidate)) {
-            throw new \Error("Array to compare cannot be empty");
+            throw new \Exception("Array to compare cannot be empty");
         }
 
         $this->toValidate = $toValidate;
