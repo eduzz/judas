@@ -13,7 +13,7 @@ class JudasLaravelServiceProvider extends ServiceProvider
     {
         $this->publishes(
             [
-            __DIR__ . '/Config/judas.php' => config_path('judas.php'),
+            __DIR__ . '/Config/judas.php' => $this->getConfigPath('judas.php'),
             ], 'config'
         );
     }
@@ -36,6 +36,16 @@ class JudasLaravelServiceProvider extends ServiceProvider
                 return $judas;
             }
         );
+    }
+
+    /**
+     * Get the configuration file path.
+     *
+     * @param string $path
+     * @return string
+     */
+    private function getConfigPath($path = '') {
+        return $this->app->basePath() . '/config' . ($path ? '/' . $path : $path);
     }
 
     public function provides()
