@@ -6,7 +6,7 @@ class Schemas
 {
     public static $INFO = [
         '*agent' => ['choose', 'procedure', 'system', 'user', 'support'],
-        '*event.app' => ['choose', 'cktsun', 'myeduzz', 'cktleg', 'myeduzzleg', 'nutror', 'next', 'backoffice'],
+        '*event.app' => ['choose', 'cktsun', 'myeduzz', 'cktleg', 'myeduzzleg', 'nutror', 'sync', 'next', 'backoffice'],
         '*event.module' => '*',
         '*event.action' => '*',
         '*event.date' => [
