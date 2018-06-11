@@ -38,7 +38,7 @@ Para atualizar o cache do composer
 composer install
 ```
 
-Para instalar as dependência e o goofy
+Para instalar as dependência e o judas
 
 PS: É preciso verificar se você está com a chave conectada ao bitbucket no shell onde vai rodar o composer install.
 
