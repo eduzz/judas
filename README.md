@@ -26,38 +26,19 @@ Primeiro, vamos adicionar a dependência e o repositório do **Judas** e do **He
 }
 ```
 
-## * Extra para Lumen
-
-Para instação do Judas em um projeto Lumen é necessário adicionar a função global config_path existente no laravel, tal função retorna a pasta das configurações, para isso, crie uma pasta chamada GlobalHelpers dentro de app e então crie um arquivo chamado config_path.php.
-
-```php
-<?php
-
-if (!function_exists('config_path'))
-{
-    /**
-     * Get the configuration path.
-     *
-     * @param string $path
-     * @return string
-     */
-    function config_path($path = '')
-    {
-        return app()->basePath() . '/config' . ($path ? '/' . $path : $path);
-    }
-}
+Após, vamos rodar o comando
 
 ```
-
-E adicione o autoload do helper dentro do seu composer.json uma declaração:
-
-```json
-"autoload": {
-    "files" : [
-        "app/GlobalHelpers/config_path.php"
-    ]
-},
+composer dump-autoload
 ```
+
+Para atualizar o cache do composer
+
+```
+composer install
+```
+
+Para instalar as dependência e o goofy
 
 PS: É preciso verificar se você está com a chave conectada ao bitbucket no shell onde vai rodar o composer install.
 
@@ -113,6 +94,48 @@ Então, é necessário configurar o judas, no arquivo config/judas.php, nas vari
 ),
 
 'environment' => 'development'
+```
+
+### Instalação em projeto Lumen
+
+Para instalação em projeto lumen, é preciso criar o arquivo de configuração na mão, vamos adicionar um arquivo chamado goofy na pasta config com o seguinte conteúdo:
+
+```php
+// Caso seja apenas store
+'elastic_connection'  =>  array(
+	'host'  =>  env('JUDAS_ELASTIC_HOST'),
+	'port'  =>  env('JUDAS_ELASTIC_PORT'),
+	'username'  =>  env('JUDAS_ELASTIC_USERNAME'),
+	'password'  =>  env('JUDAS_ELASTIC_PASSWORD')
+),
+
+// Caso seja para logar
+'queue_connection'  =>  array(
+	'host'  =>  env('JUDAS_QUEUE_HOST'),
+	'port'  =>  env('JUDAS_QUEUE_PORT'),
+	'username'  =>  env('JUDAS_QUEUE_USERNAME'),
+	'password'  =>  env('JUDAS_QUEUE_PASSWORD')
+),
+
+'environment' => 'development'
+```
+
+Vamos também adicionar nosso service provider no register, então na pasta bootstrap/app.php, procure pela linha que faz os registros e adicione:
+
+```php
+<?php
+// ...
+$app->register(Eduzz\Goofy\GoofyLaravelServiceProvider::class);
+// ...
+```
+
+Adicione também a chamada para a configuração do goofy, por exemplo:
+
+```php
+<?php
+$app->configure('goofy');
+
+return $app;
 ```
 
 ### Instalação em um projeto sem framework Illuminate
