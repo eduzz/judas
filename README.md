@@ -98,7 +98,7 @@ Então, é necessário configurar o judas, no arquivo config/judas.php, nas vari
 
 ### Instalação em projeto Lumen
 
-Para instalação em projeto lumen, é preciso criar o arquivo de configuração na mão, vamos adicionar um arquivo chamado goofy na pasta config com o seguinte conteúdo:
+Para instalação em projeto lumen, é preciso criar o arquivo de configuração na mão, vamos adicionar um arquivo chamado judas.php na pasta config com o seguinte conteúdo:
 
 ```php
 // Caso seja apenas store
@@ -125,15 +125,15 @@ Vamos também adicionar nosso service provider no register, então na pasta boot
 ```php
 <?php
 // ...
-$app->register(Eduzz\Goofy\GoofyLaravelServiceProvider::class);
+$app->register(Eduzz\Judas\JudasLaravelServiceProvider::class);
 // ...
 ```
 
-Adicione também a chamada para a configuração do goofy, por exemplo:
+Adicione também a chamada para a configuração do judas, por exemplo:
 
 ```php
 <?php
-$app->configure('goofy');
+$app->configure('judas');
 
 return $app;
 ```
