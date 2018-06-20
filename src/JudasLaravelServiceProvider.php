@@ -25,7 +25,10 @@ class JudasLaravelServiceProvider extends ServiceProvider
                 $judas = new Judas();
 
                 $judas->setQueueConfig(config('judas.queue_connection'));
-                $judas->setKeeperConfig(config('judas.elastic_connection'));
+
+                if(!empty(config('judas.elastic_connection'))) {
+                    $judas->setKeeperConfig(config('judas.elastic_connection'));
+                }
 
                 $judas->environment = 'development';
 
