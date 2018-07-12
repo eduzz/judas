@@ -114,6 +114,11 @@ class JudasLogger implements LoggerInterface
         $array['event.app'] = $explodedContext[0];
         $array['event.module'] = $explodedContext[1];
         $array['event.action'] = $explodedContext[2];
+        
+        $host = @gethostname();
+        
+        if ($host)
+        	$array['event.hostname'] = $host;
 
         return $this;
     }
