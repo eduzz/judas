@@ -39,6 +39,20 @@ class Judas
         $this->logger = $logger;
     }
 
+    /**
+     * Permite definir no Judas em qual indice ele enviará o log. 
+     * Ex: $this->judas->setEnvironment('activities')->log($context, $data)
+     * Gravará este log no índice history-activities
+     *
+     * @param string $environment
+     * @return void
+     */
+    public function setEnvironment($environment)
+    {
+        $this->environment = $environment;
+        return $this;
+    }
+
     //@codeCoverageIgnoreStart
     private function getDefaultLogger()
     {
