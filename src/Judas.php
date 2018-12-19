@@ -21,7 +21,7 @@ class Judas
 
     public $environment = 'production';
 
-    public function log($context, $messageData)
+    public function log($context, $messageData, $environment = null)
     {
         if (!($this->logger instanceof LoggerInterface)) {
             //@codeCoverageIgnoreStart
@@ -29,7 +29,7 @@ class Judas
             //@codeCoverageIgnoreEnd
         }
 
-        $this->logger->info($context, $messageData, $this->environment);
+        $this->logger->info($context, $messageData, $environment ?? $this->environment);
 
         return $this;
     }
