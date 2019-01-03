@@ -9,8 +9,6 @@ use Eduzz\Judas\LogKeeper\JudasKeeper;
 
 class Judas
 {
-    private $hermes;
-
     private $logger;
 
     private $queueConfig;
@@ -34,6 +32,34 @@ class Judas
         return $this;
     }
 
+    public function error($context, \Exception $exception, $messageData = null, $environment = null)
+    {
+
+        if (!is_array($messageData)) {
+            $messageData = array();
+        }
+
+        $messageData = $messageData + [
+            'exception.class' => get_class($exception),
+            'exception.message' => $exception->getMessage(),
+            'exception.file' => $exception->getFile(),
+            'exception.line' => $exception->getLine(),
+            'exception.code' => $exception->getCode(),
+            'exception.stacktrace' => $exception->getTraceAsString(),
+            'exception.request.uri' => $this->getServerVal('REQUEST_URI'),
+            'exception.request.query_string' => $this->getServerVal('QUERY_STRING'),
+            'exception.request.method' => $this->getServerVal('REQUEST_METHOD'),
+            'exception.request.user_agent' => $this->getServerVal('HTTP_USER_AGENT')
+        ];
+
+        $this->log($context, $messageData, $environment);
+    }
+
+    private function getServerVal($name)
+    {
+        return isset($_SERVER[$name]) ? $_SERVER[$name] : '';
+    }
+
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
@@ -45,7 +71,7 @@ class Judas
      * Gravará este log no índice history-activities
      *
      * @param string $environment
-     * @return void
+     * @return $this
      */
     public function setEnvironment($environment)
     {

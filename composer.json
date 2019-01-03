@@ -22,6 +22,7 @@
         "php": ">=5.4",
         "ext-bcmath": "*",
         "ext-mbstring": "*",
+        "ext-json": "*",
         "adbario/php-dot-notation": "^2.0",
         "eduzz/hermes": "dev-master"
     },
