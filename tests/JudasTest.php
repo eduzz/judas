@@ -143,6 +143,34 @@ class JudasTest extends BaseTest
         $this->assertSame($judas, $response);
     }
 
+    public function testJudasShouldStoreExceptions()
+    {
+
+        $loggerMock = M::mock(JudasLogger::class);
+
+        $loggerMock->shouldReceive('info')
+            ->once()
+            ->withArgs(function ($context, $messageData, $env) {
+                $this->assertArrayHasKey('exception.class', $messageData);
+                $this->assertArrayHasKey('exception.message', $messageData);
+                $this->assertArrayHasKey('exception.file', $messageData);
+                $this->assertArrayHasKey('exception.line', $messageData);
+                $this->assertArrayHasKey('exception.code', $messageData);
+                $this->assertArrayHasKey('exception.stacktrace', $messageData);
+
+                $this->assertEquals('test', $context);
+                return true;
+            })
+            ->andReturn(null);
+
+        $judas = new Judas();
+
+        $judas->setLogger($loggerMock);
+
+        $judas->error('test', new \Exception());
+
+    }
+
     public function testJudasShouldSetEmptyKeeperConfigAndThrowError()
     {
         $this->expectException(\Exception::class);
