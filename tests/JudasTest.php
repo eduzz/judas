@@ -29,9 +29,8 @@ class JudasTest extends BaseTest
 
         $judas = new Judas();
 
-        $judas->environment = 'development';
-
         $judas->setLogger($judasLoggerMock);
+        $judas->setEnvironment('development');
 
         $judas->log(
             $args[0],
