@@ -40,6 +40,7 @@ class Judas
         }
 
         $messageData = $messageData + [
+            'agent' => 'user',
             'exception.class' => get_class($exception),
             'exception.message' => $exception->getMessage(),
             'exception.file' => $exception->getFile(),
