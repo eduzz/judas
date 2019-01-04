@@ -32,7 +32,7 @@ class Judas
         return $this;
     }
 
-    public function error($context, \Exception $exception, $messageData = null, $environment = null)
+    public function error($context, \Exception $exception, $messageData = null)
     {
 
         if (!is_array($messageData)) {
@@ -52,7 +52,7 @@ class Judas
             'exception.request.user_agent' => $this->getServerVal('HTTP_USER_AGENT')
         ];
 
-        $this->log($context, $messageData, $environment);
+        $this->log($context, $messageData, 'errors');
     }
 
     private function getServerVal($name)
