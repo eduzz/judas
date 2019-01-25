@@ -280,7 +280,7 @@ ___
 | Parâmetro | Obrigatório | Valores aceitos |
 |--|--|--|
 | agent | sim | "procedure", "system", "user" ou "support" |
-| app | sim | "cktsun", "myeduzz", "cktleg", "myeduzzleg", "nutror" ou "next"  |
+| app | sim | "cktsun", "orbita", "myeduzz", "cktleg", "myeduzzleg", "nutror" ou "next"  |
 | module | sim | quaisquer |
 | action | sim | quaisquer |
 | user.id | não | inteiro ou string |
