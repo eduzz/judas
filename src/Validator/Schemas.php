@@ -5,8 +5,8 @@ namespace Eduzz\Judas\Validator;
 class Schemas
 {
     public static $INFO = [
-        '*agent' => ['choose', 'procedure', 'system', 'user', 'support'],
-        '*event.app' => ['choose', 'cktsun', 'orbita', 'myeduzz', 'cktleg', 'myeduzzleg', 'nutror', 'sync', 'next', 'backoffice'],
+        '*agent' => '*',
+        '*event.app' => '*',
         '*event.module' => '*',
         '*event.action' => '*',
         '*event.date' => [
