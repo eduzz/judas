@@ -2,41 +2,52 @@
 
 namespace Eduzz\Judas;
 
-use Eduzz\Judas\Log\LoggerInterface;
-use Eduzz\Judas\Log\JudasLogger;
-use Eduzz\Judas\LogKeeper\LogKeeperInterface;
-use Eduzz\Judas\LogKeeper\JudasKeeper;
-
 class Judas
 {
+
+    private $baseUrl;
+    private $token;
     private $logger;
 
-    private $queueConfig;
+    private $environment = 'production';
 
-    private $logKeeper;
-
-    private $keeperConfig;
-
-    public $environment = 'production';
-
-    public function log($context, $messageData, $environment = null)
+    public function __construct($baseUrl, $token, $logger = null)
     {
-        if (!($this->logger instanceof LoggerInterface)) {
-            //@codeCoverageIgnoreStart
-            $this->setLogger($this->getDefaultLogger());
-            //@codeCoverageIgnoreEnd
+
+        $this->token = $token;
+        $this->baseUrl = $baseUrl;
+
+        if (!$logger) {
+            $logger = new Logger($this->baseUrl, $this->token);
         }
 
-        $this->logger->info($context, $messageData, $environment ?? $this->environment);
+        $this->logger = $logger;
+    }
 
-        return $this;
+    public function log($context, $messageData = null)
+    {
+
+        if (!$messageData) {
+            $messageData = [];
+        }
+
+        $this->validateMessageData($messageData);
+
+        $preparedData = $this->setDefaultParamsOnArray($messageData, $context, $this->environment);
+
+        $dot = new \Adbar\Dot();
+        $dot->set($preparedData);
+
+        $finalData = $dot->get();
+
+        return $this->logger->send($finalData);
     }
 
     public function error($context, \Exception $exception, $messageData = null)
     {
 
-        if (!is_array($messageData)) {
-            $messageData = array();
+        if (!$messageData) {
+            $messageData = [];
         }
 
         $messageData = $messageData + [
@@ -53,7 +64,52 @@ class Judas
             'exception.request.user_agent' => $this->getServerVal('HTTP_USER_AGENT')
         ];
 
-        $this->log($context, $messageData, 'errors');
+        $this->log($context, $messageData);
+    }
+
+    private function validateMessageData($messageData)
+    {
+        if (!is_array($messageData)) {
+            throw new \UnexpectedValueException("messageData must be an array");
+        }
+
+        foreach ($messageData as $key => $value) {
+            if (!preg_match('@^event\.@', $key)) {
+                continue;
+            }
+
+            throw new \UnexpectedValueException("You cannot use the prefix 'event.' in your data");
+        }
+    }
+
+    private function setDefaultParamsOnArray($array, $context, $environment)
+    {
+        $explodedContext = explode('.', $context);
+
+        if (count($explodedContext) != 3) {
+            throw new \OverflowException("Context must be in format app.module.action");
+        }
+
+        $now = \DateTime::createFromFormat('U.u', microtime(true));
+
+        $array['event.date'] = preg_replace(
+            '@\d{3}Z$@',
+            'Z',
+            $now->format("Y-m-d\TH:i:s.u\Z")
+        );
+        $array['event.context'] = $context;
+        $array['event.environment'] = $environment;
+        $array['event.app'] = $explodedContext[0];
+        $array['event.module'] = $explodedContext[1];
+        $array['event.action'] = $explodedContext[2];
+
+        $host = gethostname();
+
+        if ($host) {
+            $array['event.hostname'] = $host;
+        }
+
+        return $array;
     }
 
     private function getServerVal($name)
@@ -61,82 +117,15 @@ class Judas
         return isset($_SERVER[$name]) ? $_SERVER[$name] : '';
     }
 
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-
-    /**
-     * Permite definir no Judas em qual indice ele enviará o log. 
-     * Ex: $this->judas->setEnvironment('activities')->log($context, $data)
-     * Gravará este log no índice history-activities
-     *
-     * @param string $environment
-     * @return $this
-     */
     public function setEnvironment($environment)
     {
         $this->environment = $environment;
         return $this;
     }
 
-    //@codeCoverageIgnoreStart
-    private function getDefaultLogger()
+    public function getEnvironment()
     {
-        $judasLogger = new JudasLogger();
-
-        if ($this->queueConfig && !empty($this->queueConfig) && count($this->queueConfig) > 0) {
-            $judasLogger->setQueueConfig($this->queueConfig);
-        }
-
-        return $judasLogger;
-    }
-    //@codeCoverageIgnoreEnd
-
-    public function setQueueConfig($config = null)
-    {
-        if (!$config || empty($config) || count($config) <= 0 || !is_array($config)) {
-            throw new \Exception("Queue config cannot be empty");
-        }
-
-        $this->queueConfig = $config;
-
-        return $this;
+        return $this->environment;
     }
 
-    public function store($json)
-    {
-        if (!($this->logKeeper instanceof LogKeeperInterface)) {
-            $this->setLogKeeper($this->getDefaultLogKeeper());
-        }
-
-        return $this->logKeeper->store($json);
-    }
-
-    public function setLogKeeper(LogKeeperInterface $logKeeper)
-    {
-        $this->logKeeper = $logKeeper;
-    }
-
-    private function getDefaultLogKeeper()
-    {
-        $judasKeeper = new JudasKeeper();
-
-        if (!empty($this->keeperConfig)) {
-            $judasKeeper->setElasticConfig($this->keeperConfig);
-        }
-
-        return $judasKeeper;
-    }
-
-    public function setKeeperConfig($config = null)
-    {
-        if (!is_array($config) || count($config) <= 0) {
-            throw new \Exception("Elastic config cannot be empty");
-        }
-
-        $this->keeperConfig = $config;
-
-        return $this;
-    }
 }

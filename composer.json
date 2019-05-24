@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0",
-        "php": ">=5.6",
+        "php": ">=5.4",
         "mockery/mockery": "^1.0"
     },
     "require": {
@@ -23,13 +23,7 @@
         "ext-bcmath": "*",
         "ext-mbstring": "*",
         "ext-json": "*",
-        "adbario/php-dot-notation": "^2.0",
-        "eduzz/hermes": "dev-master"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:eduzz/hermes.git"
-        }
-    ]
+        "adbario/php-dot-notation": "2.2.0",
+        "guzzlehttp/guzzle": "5.3.3"
+    }
 }

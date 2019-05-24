@@ -5,178 +5,149 @@ namespace Eduzz\Judas\Tests;
 use Mockery as M;
 
 use Eduzz\Judas\Judas;
-use Eduzz\Judas\Log\JudasLogger;
-use Eduzz\Judas\LogKeeper\LogKeeperInterface;
 
 class JudasTest extends BaseTest
 {
-    public function testJudasCanBeInstantiated()
+
+    public function testShouldSetEnvironment()
     {
-        $args = [
-            'app.module.action',
-            [
-                'id' => 1,
-                'message' => 'Nothing to see here.'
-            ],
-            'development'
-        ];
 
-        $judasLoggerMock = M::mock(JudasLogger::class)
-            ->shouldReceive('info')
-            ->withArgs($args)
-            ->andReturnNull()
-            ->getMock();
+        $loggerMock = M::mock('Eduzz\Judas\Logger');
 
-        $judas = new Judas();
+        $judas = new Judas("", "thetoken", $loggerMock);
 
-        $judas->setLogger($judasLoggerMock);
-        $judas->setEnvironment('development');
+        $this->assertEquals('production', $judas->getEnvironment());
 
-        $judas->log(
-            $args[0],
-            $args[1]
-        );
+        $judas->setEnvironment('wallawalla');
 
-        $this->assertSame(
-            $judas,
-            $judas->log(
-                $args[0],
-                $args[1]
-            )
-        );
+        $this->assertEquals('wallawalla', $judas->getEnvironment());
     }
 
-    public function testJudasShouldSetQueueConfig()
+    public function testJudasCanLog()
     {
-        $args = [
-            'host' => 'localhost',
-            'port' => 5672,
-            'username' => 'guest',
-            'password' => 'guest'
-        ];
+        $loggerMock = M::mock('Eduzz\Judas\Logger');
 
-        $judas = new Judas();
-
-        $this->assertSame($judas, $judas->setQueueConfig($args));
-    }
-
-    public function testJudasShouldSetEmptyArrayConfigAndThrowError()
-    {
-        $this->expectException(\Exception::class);
-
-        $args = null; // Empty to force error
-
-        $judas = new Judas();
-
-        $judas->setQueueConfig($args);
-    }
-
-    public function testJudasShouldStoreALog()
-    {
-        $jsonArgument = json_encode(
-            [
-            'id' => 1,
-            'message' => 'Nothing to see here.',
-            'index' => 'history'
-            ]
-        );
-
-        $return = '{"_index":"history","_type":"default","_id":"62V642IBayGLmdFUVWTo","_version":1,"result":"created","_shards":{"total":1,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1}';
-
-        $judasKeeperMock = M::mock(LogKeeperInterface::class)
-            ->shouldReceive('store')
-            ->with($jsonArgument)
-            ->andReturn($return)
-            ->getMock();
-
-        $judas = new Judas();
-        $judas->setLogKeeper($judasKeeperMock);
-
-        $response = $judas->store($jsonArgument);
-
-        $this->assertEquals($return, $response);
-    }
-
-    public function testJudasShouldStoreLog()
-    {
-        $judas = new Judas();
-
-        $judas->setKeeperConfig(
-            [
-            'host' => '127.0.0.1',
-            'port' => '9200',
-            'username' => 'elastic',
-            'password' => ''
-            ]
-        );
-
-        $response = $judas->store(
-            json_encode(
-                [
-                'agent' => 'user',
-                'event.date' => '2018-04-06T14:10:57Z',
-                'event.data.id' => 2842,
-                'user.id' => 12312,
-                'user.name' => 'johndoe',
-                'user.ip' => '127.0.0.1',
-                'index' => 'history'
-                ]
-            )
-        );
-
-        $this->assertFalse($response);
-    }
-
-    public function testJudasShouldSetKeeperConfig()
-    {
-        $args = [
-            'host' => 'localhost',
-            'port' => 9200,
-            'user' => 'elastic',
-            'password' => 'elastic'
-        ];
-
-        $judas = new Judas();
-        $response = $judas->setKeeperConfig($args);
-
-        $this->assertSame($judas, $response);
-    }
-
-    public function testJudasShouldStoreExceptions()
-    {
-
-        $loggerMock = M::mock(JudasLogger::class);
-
-        $loggerMock->shouldReceive('info')
+        $loggerMock->shouldReceive('send')
             ->once()
-            ->withArgs(function ($context, $messageData, $env) {
-                $this->assertArrayHasKey('exception.class', $messageData);
-                $this->assertArrayHasKey('exception.message', $messageData);
-                $this->assertArrayHasKey('exception.file', $messageData);
-                $this->assertArrayHasKey('exception.line', $messageData);
-                $this->assertArrayHasKey('exception.code', $messageData);
-                $this->assertArrayHasKey('exception.stacktrace', $messageData);
+            ->withArgs(function($data) {
+                $this->assertEquals("fulano", $data["name"]);
+                $this->assertEquals("test", $data["event"]["app"]);
+                $this->assertEquals("module", $data["event"]["module"]);
+                $this->assertEquals("xpto", $data["event"]["action"]);
+                $this->assertEquals("production", $data["event"]["environment"]);
+                $this->assertArrayHasKey("hostname", $data["event"]);
+                $this->assertArrayHasKey("date", $data["event"]);
 
-                $this->assertEquals('test', $context);
+
                 return true;
             })
-            ->andReturn(null);
+            ->andReturn(true);
 
-        $judas = new Judas();
+        $judas = new Judas("", "thetoken", $loggerMock);
 
-        $judas->setLogger($loggerMock);
-
-        $judas->error('test', new \Exception());
+        $judas->log(
+            "test.module.xpto",
+            [
+                "name" => "fulano"
+            ]
+        );
 
     }
 
-    public function testJudasShouldSetEmptyKeeperConfigAndThrowError()
+    public function testJudasCanLogError()
     {
-        $this->expectException(\Exception::class);
+        $loggerMock = M::mock('Eduzz\Judas\Logger');
 
-        $args = null; // Empty to force error
+        $loggerMock->shouldReceive('send')
+            ->once()
+            ->withArgs(function($data) {
 
-        $judas = new Judas();
-        $judas->setKeeperConfig($args);
+                $this->assertArrayHasKey("exception", $data);
+                $this->assertEquals("pqp", $data["exception"]["message"]);
+
+                return true;
+            })
+            ->andReturn(true);
+
+        $judas = new Judas("", "thetoken", $loggerMock);
+
+        $judas->error(
+            "test.module.xpto",
+            new \Exception("pqp"),
+            [
+                "name" => "fulano"
+            ]
+        );
+
     }
+
+    public function testJudasCanLogErrorWithoutExtraData()
+    {
+        $loggerMock = M::mock('Eduzz\Judas\Logger');
+
+        $loggerMock->shouldReceive('send')
+            ->once()
+            ->withArgs(function($data) {
+
+                $this->assertArrayHasKey("exception", $data);
+                $this->assertEquals("pqp", $data["exception"]["message"]);
+
+                return true;
+            })
+            ->andReturn(true);
+
+        $judas = new Judas("", "thetoken", $loggerMock);
+
+        $judas->error(
+            "test.module.xpto",
+            new \Exception("pqp")
+        );
+
+    }
+
+    public function testShouldValidateTheContext()
+    {
+        $loggerMock = M::mock('Eduzz\Judas\Logger');
+
+        $loggerMock->shouldReceive('send')
+            ->never();
+
+        $judas = new Judas("", "thetoken", $loggerMock);
+
+        $this->expectException('OverflowException');
+
+        $judas->log('my.context');
+    }
+
+
+    public function testShouldNotAcceptInvalidData()
+    {
+        $loggerMock = M::mock('Eduzz\Judas\Logger');
+
+        $loggerMock->shouldReceive('send')
+            ->never();
+
+        $judas = new Judas("", "thetoken", $loggerMock);
+
+        $this->expectException('UnexpectedValueException');
+
+        $judas->log('my.context', 'asd');
+    }
+
+
+    public function testShouldAllowEmptyData()
+    {
+        $loggerMock = M::mock('Eduzz\Judas\Logger');
+
+        $loggerMock->shouldReceive('send')
+            ->once()
+            ->andReturn(true);
+
+        $judas = new Judas("", "thetoken", $loggerMock);
+
+        $result = $judas->log('my.module.event');
+
+        $this->assertTrue($result);
+    }
+
 }

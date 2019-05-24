@@ -2,7 +2,6 @@
 
 namespace Eduzz\Judas;
 
-use Eduzz\Judas\Judas;
 use Illuminate\Support\ServiceProvider;
 
 class JudasLaravelServiceProvider extends ServiceProvider
@@ -20,20 +19,17 @@ class JudasLaravelServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(
+        $this->app->singleton(
             'Eduzz\Judas\Judas', function ($app) {
-                $judas = new Judas();
 
-                $judas->setQueueConfig(config('judas.queue_connection'));
+                $token = config('judas.token');
+                $baseUrl = config('judas.baseUrl', '');
+                $env = config('judas.environment', 'development');
 
-                if(!empty(config('judas.elastic_connection'))) {
-                    $judas->setKeeperConfig(config('judas.elastic_connection'));
-                }
+                $judas = new Judas($baseUrl, $token);
 
-                $judas->environment = 'development';
-
-                if(!empty(config('judas.environment'))) {
-                    $judas->environment = config('judas.environment');
+                if (!empty($env)) {
+                    $judas->setEnvironment($env);
                 }
 
                 return $judas;
@@ -53,6 +49,6 @@ class JudasLaravelServiceProvider extends ServiceProvider
 
     public function provides()
     {
-        return [Judas::class];
+        return ['Eduzz\Judas\Judas'];
     }
 }

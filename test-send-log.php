@@ -3,36 +3,23 @@
 require_once __DIR__ . '/vendor/autoload.php';
 use Eduzz\Judas\Judas;
 
-$judas = new Judas();
+$judas = new Judas("http://localhost:4000", "asdfgh");
 
-// Logando tentativa de login com judas
-$judas->setQueueConfig([
-    'host' => 'localhost',
-    'port' => 5672,
-    'username' => 'guest',
-    'password' => 'guest'
-]);
-
-$judas->log(
-    'myeduzzleg.user.login',
+$result = $judas->log(
+    'test.user.login',
     [
         'agent' => 'user',
-        'event.data.id' => 999,
+        'data.id' => 999,
         'user.id' => 999,
         'user.name' => "angelorodriigo.rs@gmail.com",
         'user.ip' => "127.0.0.1",
         'additional_data.status' => 'success'
     ]
 );
+$result->then(function($result) {
+    var_dump('request sent', $result);
+}, function($err) {
+    var_dump('request error', $err);
+});
 
-$judas->log(
-    'myeduzzleg.user.logout',
-    [
-        'agent' => 'user',
-        'event.data.id' => 999,
-        'user.id' => 999,
-        'user.name' => "jezao@eduzz.com",
-        'user.ip' => "127.0.0.1",
-        'additional_data.status' => 'success'
-    ]
-);
+var_dump("complete");
