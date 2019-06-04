@@ -2,6 +2,7 @@
 
 namespace Eduzz\Judas;
 
+use Eduzz\Judas\Http\HttpClientFactory;
 use Illuminate\Support\ServiceProvider;
 
 class JudasLaravelServiceProvider extends ServiceProvider
@@ -26,7 +27,9 @@ class JudasLaravelServiceProvider extends ServiceProvider
                 $baseUrl = config('judas.baseUrl', '');
                 $env = config('judas.environment', 'development');
 
-                $judas = new Judas($baseUrl, $token);
+                $factory = new HttpClientFactory();
+
+                $judas = new Judas($baseUrl, $token, $factory->createHttpClient());
 
                 if (!empty($env)) {
                     $judas->setEnvironment($env);

@@ -23,7 +23,6 @@
         "ext-bcmath": "*",
         "ext-mbstring": "*",
         "ext-json": "*",
-        "adbario/php-dot-notation": "2.2.0",
-        "guzzlehttp/guzzle": "5.3.3"
+        "adbario/php-dot-notation": "2.2.0"
     }
 }

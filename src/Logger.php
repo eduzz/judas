@@ -2,6 +2,7 @@
 
 namespace Eduzz\Judas;
 
+use Eduzz\Judas\Http\HttpClientFactory;
 use GuzzleHttp\Client;
 
 class Logger
@@ -14,11 +15,12 @@ class Logger
 
     public function __construct($baseUrl, $token, $client = null)
     {
-        if (!$client) {
-            $client = new Client();
-        }
-
         $this->client = $client;
+
+        if (!$client) {
+            $factory = new HttpClientFactory();
+            $this->client = $factory->createHttpClient();
+        }
 
         if (!$baseUrl) {
             $baseUrl = 'http://judas.eduzz.com';
@@ -33,15 +35,15 @@ class Logger
 
         $body = json_encode($messageData);
 
-        $result = $this->client->post("{$this->baseUrl}/store", [
-            "future" => true,
-            "headers" => [
-                "content-type"  => "application/json",
+        $result = $this->client->post(
+            "{$this->baseUrl}/store",
+            [
+                "Content-Type"  => "application/json",
                 "Accept"        => "application/json",
                 "Authorization" => $this->token
             ],
-            "body" => $body
-        ]);
+            $body
+        );
 
         return $result;
     }
