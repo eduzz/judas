@@ -3,24 +3,24 @@
 namespace Eduzz\Judas;
 
 use Eduzz\Judas\Http\HttpClientFactory;
-use GuzzleHttp\Client;
 
 class Logger
 {
 
-    /* @var \GuzzleHttp\Client */
+    /* @var \Eduzz\Judas\Http\HttpClientInterface */
     private $client;
     private $baseUrl;
     private $token;
 
     public function __construct($baseUrl, $token, $client = null)
     {
-        $this->client = $client;
 
         if (!$client) {
             $factory = new HttpClientFactory();
-            $this->client = $factory->createHttpClient();
+            $client = $factory->createHttpClient();
         }
+
+        $this->client = $client;
 
         if (!$baseUrl) {
             $baseUrl = 'http://judas.eduzz.com';

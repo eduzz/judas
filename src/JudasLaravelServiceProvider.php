@@ -27,9 +27,7 @@ class JudasLaravelServiceProvider extends ServiceProvider
                 $baseUrl = config('judas.baseUrl', '');
                 $env = config('judas.environment', 'development');
 
-                $factory = new HttpClientFactory();
-
-                $judas = new Judas($baseUrl, $token, $factory->createHttpClient());
+                $judas = new Judas($baseUrl, $token);
 
                 if (!empty($env)) {
                     $judas->setEnvironment($env);
