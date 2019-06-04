@@ -25,6 +25,6 @@ class Guzzle6Client implements HttpClientInterface
             "body" => $body
         ]);
 
-        return $result;
+        return $result->wait();
     }
 }
