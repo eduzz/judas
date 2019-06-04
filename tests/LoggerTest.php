@@ -11,7 +11,7 @@ class LoggerTest extends BaseTest
     public function testLoggerCanBeCreated()
     {
 
-        $clientMock = M::mock('\GuzzleHttp\Client');
+        $clientMock = M::mock('\Eduzz\Judas\Http\HttpClientInterface');
 
         $logger = new Logger("http://test", "myToken", $clientMock);
 
@@ -21,22 +21,21 @@ class LoggerTest extends BaseTest
     public function testCanLog()
     {
 
-        $clientMock = M::mock('\GuzzleHttp\Client');
+        $clientMock = M::mock('\Eduzz\Judas\Http\HttpClientInterface');
 
         $data = [
             "name" => "fulano"
         ];
 
         $clientMock->shouldReceive('post')
-            ->with('http://test/store', [
-                "future" => true,
-                "headers" => [
-                    "content-type"  => "application/json",
+            ->with(
+                'http://test/store', [
+                    "Content-Type"  => "application/json",
                     "Accept"        => "application/json",
                     "Authorization" => "myToken"
                 ],
-                "body" => json_encode($data)
-            ])
+                json_encode($data)
+            )
             ->once()
             ->andReturn(M::mock('\GuzzleHttp\Message\FutureResponse'));
 
