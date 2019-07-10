@@ -94,8 +94,7 @@ class Judas
         $now = \DateTime::createFromFormat('U.u', $time);
 
         if (is_bool($now)) {
-            $time += 0.001;
-            $now = DateTime::createFromFormat('U.u', $time);
+            $now = new \DateTime();
         }
 
         $array['event.date'] = preg_replace(
