@@ -89,12 +89,10 @@ class Judas
         if (count($explodedContext) != 3) {
             throw new \OverflowException("Context must be in format app.module.action");
         }
-
-        $now = \DateTime::createFromFormat('U.u', microtime(true));
         
-        if (is_bool($now)) {
-            $now = DateTime::createFromFormat('U.u', $aux += 0.001);
-        }
+        $time = microtime(true) + 0.001;
+
+        $now = \DateTime::createFromFormat('U.u', $time);
 
         $array['event.date'] = preg_replace(
             '@\d{3}Z$@',
