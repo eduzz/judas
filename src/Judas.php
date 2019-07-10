@@ -91,6 +91,10 @@ class Judas
         }
 
         $now = \DateTime::createFromFormat('U.u', microtime(true));
+        
+        if (is_bool($now)) {
+            $now = DateTime::createFromFormat('U.u', $aux += 0.001);
+        }
 
         $array['event.date'] = preg_replace(
             '@\d{3}Z$@',
