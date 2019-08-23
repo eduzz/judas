@@ -64,7 +64,7 @@ class Judas
             'exception.request.user_agent' => $this->getServerVal('HTTP_USER_AGENT')
         ];
 
-        $this->log($context, $messageData);
+        return $this->log($context, $messageData);
     }
 
     private function validateMessageData($messageData)

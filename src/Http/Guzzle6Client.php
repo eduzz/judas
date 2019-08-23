@@ -4,7 +4,7 @@ namespace Eduzz\Judas\Http;
 
 use GuzzleHttp\Client;
 
-class Guzzle6Client implements HttpClientInterface
+class Guzzle6Client extends AbstractClient implements HttpClientInterface
 {
 
     private $client;
@@ -25,9 +25,7 @@ class Guzzle6Client implements HttpClientInterface
             "body" => $body
         ]);
 
-        register_shutdown_function(function() use ($result) {
-            $result->wait();
-        });
+        $this->await($result);
 
         return $result;
     }
