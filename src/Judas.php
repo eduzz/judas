@@ -2,10 +2,10 @@
 
 namespace Eduzz\Judas;
 
-use Eduzz\Judas\Log\LoggerInterface;
-use Eduzz\Judas\Log\JudasLogger;
-use Eduzz\Judas\LogKeeper\LogKeeperInterface;
 use Eduzz\Judas\LogKeeper\JudasKeeper;
+use Eduzz\Judas\LogKeeper\LogKeeperInterface;
+use Eduzz\Judas\Log\JudasLogger;
+use Eduzz\Judas\Log\LoggerInterface;
 
 class Judas
 {
@@ -50,7 +50,7 @@ class Judas
             'exception.request.uri' => $this->getServerVal('REQUEST_URI'),
             'exception.request.query_string' => $this->getServerVal('QUERY_STRING'),
             'exception.request.method' => $this->getServerVal('REQUEST_METHOD'),
-            'exception.request.user_agent' => $this->getServerVal('HTTP_USER_AGENT')
+            'exception.request.user_agent' => $this->getServerVal('HTTP_USER_AGENT'),
         ];
 
         $this->log($context, $messageData, 'errors');
@@ -67,7 +67,7 @@ class Judas
     }
 
     /**
-     * Permite definir no Judas em qual indice ele enviará o log. 
+     * Permite definir no Judas em qual indice ele enviará o log.
      * Ex: $this->judas->setEnvironment('activities')->log($context, $data)
      * Gravará este log no índice history-activities
      *
@@ -97,6 +97,10 @@ class Judas
     {
         if (!$config || empty($config) || count($config) <= 0 || !is_array($config)) {
             throw new \Exception("Queue config cannot be empty");
+        }
+
+        if (!(array_key_exists('connection_name', $config)) || empty($config['connection_name'])) {
+            $config['connection_name'] = 'judas-' . @gethostname();
         }
 
         $this->queueConfig = $config;
