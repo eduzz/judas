@@ -1,20 +1,21 @@
 <?php
 
-return array(
-    'elastic_connection' => array(
-        'host'                => 'localhost',
-        'port'                => 9200,
-        'username'            => 'elastic',
-        'password'            => ''
-    ),
+return [
+    'elastic_connection' => [
+        'host' => 'localhost',
+        'port' => 9200,
+        'username' => 'elastic',
+        'password' => '',
+    ],
 
-    'queue_connection' => array(
-        'host'                => 'localhost',
-        'port'                => 5672,
-        'username'            => 'guest',
-        'password'            => 'guest',
-        'vhost'               => '/'
-    ),
+    'queue_connection' => [
+        'host' => 'localhost',
+        'port' => 5672,
+        'username' => 'guest',
+        'password' => 'guest',
+        'vhost' => '/',
+        'connection_name' => null,
+    ],
 
-    'environment' => 'development'
-);
+    'environment' => 'development',
+];

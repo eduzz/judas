@@ -114,7 +114,8 @@ Para instalação em projeto lumen, é preciso criar o arquivo de configuração
 	'host'  =>  env('JUDAS_QUEUE_HOST'),
 	'port'  =>  env('JUDAS_QUEUE_PORT'),
 	'username'  =>  env('JUDAS_QUEUE_USERNAME'),
-	'password'  =>  env('JUDAS_QUEUE_PASSWORD')
+	'password'  =>  env('JUDAS_QUEUE_PASSWORD'),
+	'connection_name' => env('JUDAS_QUEUE_CONNECTION_NAME'),
 ),
 
 'environment' => 'development'
@@ -241,7 +242,8 @@ $judas->setQueueConfig([
     'port' => 5672,
     'username' => 'guest',
     'password' => 'guest',
-    'vhost' => '/'
+	'vhost' => '/',
+	'connection_name' => null,
 ]);
 
 $judas->environment = 'development';
