@@ -20,7 +20,7 @@ class JudasLaravelServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(
+        $this->app->singleton(
             'Eduzz\Judas\Judas', function ($app) {
                 $judas = new Judas();
 
