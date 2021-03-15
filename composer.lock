@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c431a927cbd121d0aed1d95810181e0f",
+    "content-hash": "3ae55dfafa8c1ea90d13e58888dc1ac3",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -61,12 +61,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eduzz/hermes.git",
-                "reference": "c225d781fdfeb7b56d582b816cb9ead3f85bd1e4"
+                "reference": "82726bb3f618eade43ccc50c2710fad1b4d13640"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eduzz/hermes/zipball/c225d781fdfeb7b56d582b816cb9ead3f85bd1e4",
-                "reference": "c225d781fdfeb7b56d582b816cb9ead3f85bd1e4",
+                "url": "https://api.github.com/repos/eduzz/hermes/zipball/82726bb3f618eade43ccc50c2710fad1b4d13640",
+                "reference": "82726bb3f618eade43ccc50c2710fad1b4d13640",
                 "shasum": ""
             },
             "require": {
@@ -79,6 +79,7 @@
                 "mockery/mockery": "^1.0",
                 "phpunit/phpunit": "^7.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -86,27 +87,9 @@
                     "Eduzz\\Hermes\\Examples\\": "examples/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Eduzz\\Hermes\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bruno Augusto Guido",
-                    "email": "bruno.guido@eduzz.com"
-                },
-                {
-                    "name": "Luiz Fernando de Oliveira da Silva",
-                    "email": "luiz.silva@eduzz.com"
-                },
-                {
-                    "name": "Angelo Rodrigo Ribeiro da Silva",
-                    "email": "angelo.silva@eduzz.com"
-                }
             ],
             "description": "Essa Lib e responsavel por encapsular a conexao com gerenciadores de filas. Focando no uso com RabbitMQ.",
             "keywords": [
@@ -116,10 +99,10 @@
                 "rabbitmq"
             ],
             "support": {
-                "source": "https://github.com/eduzz/hermes/tree/master",
-                "issues": "https://github.com/eduzz/hermes/issues"
+                "issues": "https://github.com/eduzz/hermes/issues",
+                "source": "https://github.com/eduzz/hermes/tree/master"
             },
-            "time": "2019-01-30T17:38:35+00:00"
+            "time": "2021-01-12T17:33:01+00:00"
         },
         {
             "name": "php-amqplib/php-amqplib",
@@ -1783,12 +1766,13 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4",
+        "php": ">=7.0",
         "ext-bcmath": "*",
         "ext-mbstring": "*",
         "ext-json": "*"
     },
     "platform-dev": {
         "php": ">=5.6"
-    }
+    },
+    "plugin-api-version": "2.0.0"
 }
