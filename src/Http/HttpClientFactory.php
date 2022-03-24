@@ -13,7 +13,7 @@ class HttpClientFactory
 
             $object = new $class();
 
-            $version = $object::VERSION ?? $object::MAJOR_VERSION ?? null;
+            $version = defined("$class::VERSION") ? $object::VERSION : (defined("$class::MAJOR_VERSION") ? $object::MAJOR_VERSION : null);
 
             if (preg_match('@^5@', $version)) {
                 return new Guzzle5Client();
