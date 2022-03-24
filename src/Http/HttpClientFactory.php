@@ -13,16 +13,22 @@ class HttpClientFactory
 
             $object = new $class();
 
-            if (preg_match('@^5@', $object::VERSION)) {
+            $version = $object::VERSION ?? $object::MAJOR_VERSION ?? null;
+
+            if (preg_match('@^5@', $version)) {
                 return new Guzzle5Client();
             }
 
-            if (preg_match('@^6@', $object::VERSION)) {
+            if (preg_match('@^6@', $version)) {
                 return new Guzzle6Client();
+            }
+
+            if (preg_match('@^7@', $version)) {
+                return new Guzzle7Client();
             }
         }
 
-        throw new \RuntimeException("We need guzzle 5 or 6");
+        throw new \RuntimeException("We need guzzle 5, 6 or 7");
 
     }
 
