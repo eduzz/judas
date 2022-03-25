@@ -7,7 +7,7 @@ abstract class AbstractClient
     protected function isCli()
     {
         if (defined('STDIN')) {
-		    return true;
+	        return true;
 	    }
 	
         return (
