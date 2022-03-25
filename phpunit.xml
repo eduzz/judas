@@ -6,20 +6,20 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false">
-	<php>
-		<ini name="error_reporting" value="-1" />
-		<ini name="date.timezone" value="UTC" />
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <ini name="date.timezone" value="UTC" />
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
-	</php>
-	<testsuites>
-		<testsuite name="general">
-			<directory suffix="Test.php">tests</directory>
+    </php>
+    <testsuites>
+        <testsuite name="general">
+            <directory suffix="Test.php">tests</directory>
             <exclude>./tests/BaseTest.php</exclude>
-		</testsuite>
-	</testsuites>
-	<filter>
+        </testsuite>
+    </testsuites>
+    <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
             <exclude>

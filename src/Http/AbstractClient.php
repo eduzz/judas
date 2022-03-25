@@ -7,9 +7,9 @@ abstract class AbstractClient
     protected function isCli()
     {
         if (defined('STDIN')) {
-	        return true;
-	    }
-	
+            return true;
+        }
+
         return (
             empty($_SERVER['REMOTE_ADDR'])
             && !isset($_SERVER['HTTP_USER_AGENT'])
