@@ -20,12 +20,12 @@ class Guzzle7Client extends AbstractClient implements HttpClientInterface
             $headers = [];
         }
 
-        $result = $this->client->postAsync($url, [
+        $promise = $this->client->postAsync($url, [
             "headers" => $headers,
-            "json" => $body
+            "json" => json_decode($body)
         ]);
 
-        $this->await($result);
+        $result = $promise->wait();
 
         return $result;
     }
